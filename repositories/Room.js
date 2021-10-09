@@ -49,6 +49,8 @@ class RoomRepository {
 
     async getAllRoomByUserId(userId){
         try{ 
+            const list_room = await Room.find({members: {$elemMatch: {member: userId}}}).populate({path: 'members.member', select: ['firstName', 'lastName', 'avatar']});
+            return list_room;
         } catch (error) {
             throw(error);
         }

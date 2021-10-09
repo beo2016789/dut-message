@@ -41,7 +41,12 @@ class ConversationRepository {
     }
 
     async getAllConverByUserId(userId) {
-        
+        try{
+            const list_conver = await Conversation.find({userIns: {$elemMatch: {userIn: userId}}}).populate({path: 'userIns.userIn', select: ['_id', 'firstName', 'lastName', 'avatar']});
+            return list_conver;
+        } catch(error) {
+            throw(error);
+        }
     }
 }
 module.exports = ConversationRepository;

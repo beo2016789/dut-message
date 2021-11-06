@@ -42,7 +42,7 @@ class ConversationRepository {
 
     async getAllConverByUserId(userId) {
         try{
-            const list_conver = await Conversation.find({userIns: {$elemMatch: {userIn: userId}}}).populate({path: 'userIns.userIn', select: ['_id', 'firstName', 'lastName', 'avatar']});
+            const list_conver = await Conversation.find({userIns: {$elemMatch: {userIn: userId}}}).populate({path: 'userIns.userIn', select: ['_id', 'firstName', 'lastName', 'avatar']}).populate({path: 'list_message', options: {limit: 1, sort: {$natural: -1}}});
             return list_conver;
         } catch(error) {
             throw(error);

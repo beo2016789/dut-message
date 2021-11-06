@@ -11,8 +11,7 @@ const UserRepository = require('../repositories/Users'),
       ConversationService = require('../services/conversationService'),
       ConversationController = require('../controllers/Conversations'),
       MessageRepository = require('../repositories/Messages'),
-      MessageService = require('../services/messageService'),
-      MessageController = require('../controllers/Messages')
+      MessageService = require('../services/messageService')
 
 let userRepo = new UserRepository();
 let authService = new AuthService(userRepo);
@@ -34,7 +33,6 @@ let conversationController = new ConversationController(conversationService);
 
 let messageRepo = new MessageRepository();
 let messageService = new MessageService(messageRepo, conversationRepo, roomRepo);
-let messageController = new MessageController(messageService);
 
 module.exports = {
     authController: authController,
@@ -42,5 +40,5 @@ module.exports = {
     authMiddleware: authMiddleware,
     conversationController: conversationController,
     roomController: roomController,
-    messageController: messageController,
+    messageService: messageService,
 }

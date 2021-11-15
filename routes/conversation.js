@@ -3,7 +3,7 @@ const {conversationController} = require('../utility/modulesInjection');
 const router = express.Router();
 
 const {authMiddleware} = require('../utility/modulesInjection')
-router.use(authMiddleware.AuthenToken);
+// router.use(authMiddleware.AuthenToken);
 
 router.get('/messages', conversationController.getMessageByConverId);
 router.get('/', conversationController.getAllConverByUserId);

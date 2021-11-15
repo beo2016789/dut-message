@@ -30,15 +30,18 @@ let conversationRepo = new ConversationRepository();
 let conversationService = new ConversationService(conversationRepo);
 let conversationController = new ConversationController(conversationService);
 
-
 let messageRepo = new MessageRepository();
 let messageService = new MessageService(messageRepo, conversationRepo, roomRepo);
 
+
+
 module.exports = {
     authController: authController,
+    userService: userService,
     userController: userController,
     authMiddleware: authMiddleware,
     conversationController: conversationController,
+    roomService: roomService,
     roomController: roomController,
     messageService: messageService,
 }

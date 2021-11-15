@@ -36,5 +36,14 @@ class RoomService {
             throw(err);
         }
     }
+
+    async getListRoomIdsByUserId(userId) {
+        try{
+            const list_roomId = await this._roomRepo.getListRoomIdsByUserId(userId);
+            return list_roomId;
+        } catch(err){
+            throw(err);
+        }
+    }
 }
 module.exports = RoomService;

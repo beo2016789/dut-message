@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const FriendRequest = require('../models/FriendRequest');
 const bcrypt = require('bcrypt');
 
 class UserRepository {
@@ -24,7 +25,7 @@ class UserRepository {
     
     async addRefreshToken(userId, token) {
         try{
-            await User.findByIdAndUpdate(userId, {$push: {refreshToken: token}})
+            await User.findByIdAndUpdate(userId, {$push: {refreshToken: token}});
         } catch(err){
             throw(err);
         }
@@ -32,7 +33,7 @@ class UserRepository {
 
     async removeRefreshToken(userId, refreshToken) {
         try{
-            await User.findByIdAndUpdate(userId, {$pull: {refreshToken: refreshToken}})
+            await User.findByIdAndUpdate(userId, {$pull: {refreshToken: refreshToken}});
         } catch(err){
             throw(err);
         }
@@ -47,12 +48,72 @@ class UserRepository {
         }
     }
 
+    async findUserByPhone(phone) {
+        try{
+            let user = await User.findOne({phone: phone});
+            return user;
+        } catch(err){
+            throw(err);
+        }
+    }
+
     async checkRefresh(userId, refreshToken) {
         try {
             let user = await User.findById(userId);
             if(user.refreshToken.includes(refreshToken)) return true;
             else return false;
         } catch(err){
+            throw(err);
+        }
+    }
+
+    async createFriendRequest(fromId, toId){
+        try{
+            let F_request = await FriendRequest.create({from: fromId, to: toId});
+            return F_request;
+        } catch(err){
+            throw(err);
+        }
+    }
+
+    async removeFriendRequest(F_RequestId){
+        try{
+            await FriendRequest.findByIdAndRemove(F_RequestId);
+        } catch(err){
+            throw(err);
+        }
+    }
+
+    async getAllF_RequestTo(userId) {
+        try{
+            const F_Requests = await FriendRequest.find({to: userId}).populate('to').populate('from'); 
+            return F_Requests;
+        } catch(err){
+            throw(err);
+        }
+    }
+
+    async addFriend(userId, friendId) {
+        try{
+            await User.findByIdAndUpdate(userId, {$push: {friends: friendId}});
+        } catch(err){
+            throw(err);
+        }
+    }
+
+    async removeFriend(userId, friendId) {
+        try{
+            await User.findByIdAndUpdate(userId, {$pull: {friends: friendId}});
+        } catch(err){
+            throw(err);
+        }
+    }
+
+    async getAllFriends(userId){
+        try{
+            const list_friend = await User.findById(userId).populate('friends');
+            return list_friend.friends;
+        } catch(err) {
             throw(err);
         }
     }

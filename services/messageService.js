@@ -9,6 +9,7 @@ class MessageService {
         try{
             const result = await this._messageRepo.createMessage(message);
             await this._conversationRepo.addMessage(converId, result._id);
+            return result;
         }catch(err){
             throw(err);
         }

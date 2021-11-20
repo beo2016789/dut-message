@@ -69,7 +69,7 @@ class UserRepository {
 
     async createFriendRequest(fromId, toId){
         try{
-            let F_request = await FriendRequest.create({from: fromId, to: toId});
+            let F_request = await FriendRequest.create({from: fromId, to: toId}).populate('from').populate('to');
             return F_request;
         } catch(err){
             throw(err);
@@ -79,6 +79,15 @@ class UserRepository {
     async removeFriendRequest(F_RequestId){
         try{
             await FriendRequest.findByIdAndRemove(F_RequestId);
+        } catch(err){
+            throw(err);
+        }
+    }
+
+    async getFriendRequest(fromId, toId){
+        try{
+            let F_request = await FriendRequest.findOne({from: fromId, to: toId}).populate('from').populate('to');
+            return F_request;
         } catch(err){
             throw(err);
         }

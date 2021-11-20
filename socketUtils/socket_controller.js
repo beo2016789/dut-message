@@ -25,9 +25,10 @@ class SocketController {
 
     async addFriendHandler(socket, io, data) {
         await this._userService.addFriend(data.fromId, data.toId);
-        await this._userService.addFriend(data.toId, data.fromId);
-        io.to(`${this._socketRepo.getSocketIdByUserId(data.fromId)}`).emit(socketConsts.EVENT_NOTIFY_ACCEPT_FRIEND, 'is accepted');
-        io.to(`${this._socketRepo.getSocketIdByUserId(data.toId)}`).emit(socketConsts.EVENT_NOTIFY_ACCEPT_FRIEND, 'accepted');
+        const F_request = await this._userService.getFriendRequest(data.fromId, data.toId);
+        await this._userService.removeFriendRequest(F_request._id);
+        io.to(`${this._socketRepo.getSocketIdByUserId(data.fromId)}`).emit(socketConsts.EVENT_NOTIFY_ACCEPT_FRIEND, F_request);
+        io.to(`${this._socketRepo.getSocketIdByUserId(data.toId)}`).emit(socketConsts.EVENT_NOTIFY_ACCEPT_FRIEND, F_request);
     }
 
     async disconnectHandler(socket) {

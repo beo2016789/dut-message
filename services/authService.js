@@ -47,6 +47,32 @@ class AuthService {
             throw(err);
         }
     }
+
+    async checkUsernameExist(username) {
+        try{
+            const user = await this._userRepo.findByUsername(username);
+            if(user) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (err) {
+            throw(err);
+        }
+    }
+
+    async checkPhoneExist(phone) {
+        try{
+            const user = await this._userRepo.findUserByPhone(phone);
+            if(user) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (err) {
+            throw(err);
+        }
+    }
 }
 
 module.exports = AuthService;

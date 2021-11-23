@@ -15,7 +15,11 @@ class UserController {
     findByUsername = async (req, res, next) => {
         try{
             let response = await this._userService.findByUsername(req.body.username);
-            res.status(200).json(response);
+            if(response) {
+                res.status(200).json(response);
+            } else {
+                res.status(404).json({error: "not found"});
+            }
         } catch (err) {
             res.status(500).json({error: err});
         }
@@ -25,7 +29,11 @@ class UserController {
     findUserByPhone = async (req, res, next) => {
         try{
             let response = await this._userService.findUserByPhone(req.body.phone);
-            res.status(200).json(response);
+            if(response){
+                res.status(200).json(response);
+            } else {
+                res.status(404).json({error: "not found"});
+            }
         } catch (err) {
             res.status(500).json({error: err});
         }

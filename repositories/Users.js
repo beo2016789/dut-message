@@ -69,8 +69,9 @@ class UserRepository {
 
     async createFriendRequest(fromId, toId){
         try{
-            let F_request = await FriendRequest.create({from: fromId, to: toId}).populate('from').populate('to');
-            return F_request;
+            let F_request = await FriendRequest.create({from: fromId, to: toId});
+            let Friend_request = await FriendRequest.findById(F_request._id).populate({path: 'from', select: ['_id', 'name', 'avatar']}).populate({path: 'to', select: ['_id', 'name', 'avatar']});
+            return Friend_request;
         } catch(err){
             throw(err);
         }
@@ -86,7 +87,7 @@ class UserRepository {
 
     async getFriendRequest(fromId, toId){
         try{
-            let F_request = await FriendRequest.findOne({from: fromId, to: toId}).populate('from').populate('to');
+            let F_request = await FriendRequest.findOne({from: fromId, to: toId}).populate({path: 'from', select: ['_id', 'name', 'avatar']}).populate({path: 'to', select: ['_id', 'name', 'avatar']});
             return F_request;
         } catch(err){
             throw(err);
@@ -95,7 +96,7 @@ class UserRepository {
 
     async getAllF_RequestTo(userId) {
         try{
-            const F_Requests = await FriendRequest.find({to: userId}).populate('to').populate('from'); 
+            const F_Requests = await FriendRequest.find({to: userId}).populate({path: 'to', select: ['_id', 'name', 'avatar']}).populate({path: 'from', select: ['_id', 'name', 'avatar']}); 
             return F_Requests;
         } catch(err){
             throw(err);
@@ -120,9 +121,47 @@ class UserRepository {
 
     async getAllFriends(userId){
         try{
-            const list_friend = await User.findById(userId).populate('friends');
+            const list_friend = await User.findById(userId).populate({path: 'friends', select: ['_id', 'name', 'avatar']});
             return list_friend.friends;
         } catch(err) {
+            throw(err);
+        }
+    }
+
+    async changeAvatar(userId, avatarURL){
+        try{
+            await User.findByIdAndUpdate(userId, {avatar: avatarURL});
+        } catch(err) {
+            throw(err);
+        }
+    }
+
+    async changeName(userId, name){
+        try{
+            await User.findByIdAndUpdate(userId, {name: name});
+        } catch(err) {
+            throw(err);
+        }
+    }
+
+    async changePassword(userId, password){
+        try{
+            await User.findByIdAndUpdate(userId, {password: password});
+        }catch(err){
+            throw(err);
+        }
+    }
+
+    async checkPassword(userId, pw){
+        try{
+            let hash = await bcrypt.hash(pw, 10);
+            let password = await User.findById(userId).password;
+            if(password == hash){
+                return true;
+            } else {
+                return false;
+            }
+        } catch(err){
             throw(err);
         }
     }

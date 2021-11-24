@@ -29,5 +29,14 @@ class RoomController {
             res.status(500).json(error);
         }
     }
+
+    getAllRoomIdsByUserId = async (req, res, next) => {
+        try{
+            const roomIds = await this._roomService.getListRoomIdsByUserId(req.headers.id);
+            res.status(200).json(roomIds);
+        } catch(error){
+            res.status(500).json(error);
+        }
+    }
 }
 module.exports = RoomController;

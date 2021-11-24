@@ -59,6 +59,7 @@ class RoomRepository {
     async getListRoomIdsByUserId(userId) {
         try{ 
             const list_roomId = await Room.find({members: {$elemMatch: {member: userId}}}, '_id');  
+            return list_roomId;
         } catch (error) {
             throw(error);
         }

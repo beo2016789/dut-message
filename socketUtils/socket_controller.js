@@ -19,7 +19,7 @@ class SocketController {
     }
 
     async friendRequestHandler(socket, io, data) {
-        const F_request = this._userService.createFriendRequest(data.fromId, data.toId);
+        const F_request = await this._userService.createFriendRequest(data.fromId, data.toId);
         io.to(`${this._socketRepo.getSocketIdByUserId(data.toId)}`).emit(socketConsts.EVENT_RECEIVE_FRIEND_REQUEST, F_request);
     }
 

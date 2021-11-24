@@ -13,9 +13,10 @@ class SocketController {
         io.to(`${this._socketRepo.getSocketIdByUserId(data.toUserId)}`).emit(socketConsts.EVENT_RECEIVE_CONVER_MESSAGE, result);
     }
 
-    async roomMessageHandler(socket, data) {
+    async  roomMessageHandler(socket, io, data) {
         const result = await this._messageService.addMessageToRoom(data.roomId, {author: data.fromUserId, content: data.content});
-        socket.to(`${data.roomId}`).emit(socketConsts.EVENT_RECEIVE_ROOM_MESSAGE, result);
+        console.log(result);
+        socket.to(data.roomId).emit(socketConsts.EVENT_RECEIVE_ROOM_MESSAGE, result);
     }
 
     async friendRequestHandler(socket, io, data) {

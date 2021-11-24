@@ -36,6 +36,7 @@ class MessageService {
         try{
             const result = await this._messageRepo.createMessage(message);
             await this._roomRepo.addMessage(roomId, result._id);
+            return result;
         } catch(err){
             throw(err);
         }

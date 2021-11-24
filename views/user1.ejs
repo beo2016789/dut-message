@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="socket.io/socket.io.js"></script>
+    <script>
+        var socket = io("http://localhost:3000", { query: { userId: "61581ec69a4b9f978cfcf7f4" } });
+
+        socket.on("receive-room-message", (data) => {
+            $("#return").append(data.author.name + ": " + data.content);
+        })
+        socket.on("receive-friend-request", (data) => {
+            $("#list_friend_request").append("_id: " + data._id + " from: " + data.from._id + " to: " + data.to._id);
+        })
+
+        $(document).ready(function () {
+            $("#send").click(function () {
+                socket.emit("send-room-message", {
+                    roomId: "618666012c9f00e3aa2e03da",
+                    fromUserId: "61581ec69a4b9f978cfcf7f4",
+                    content: "user1"
+                })
+            })
+            $("#addfriend").click(function () {
+                socket.emit("send-friend-request", {
+                    fromId: '61581ec69a4b9f978cfcf7f4',
+                    toId: '615ddd8abdd0c39290cd17d4',
+                })
+            })
+        })
+    </script>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="addfriend">Add friend</div>
+    <div id="send">click send room</div>
+    <h3 id="return"></h3>
+    <h3 id="list_friend_request"></h3>
+</body>
+
+</html>

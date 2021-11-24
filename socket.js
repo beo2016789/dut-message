@@ -6,13 +6,17 @@ const {userService, roomService, messageService} = require('./utility/modulesInj
 let socketRepo = new SocketRepo();
 let socketController = new SocketController(userService, messageService, socketRepo);
 module.exports = async (socket, io) => {
+    const userId = socket.handshake.query.userId;
+    console.log(userId)
     socketRepo.addUserToMap(userId, socket.id);
     const list_roomId = await roomService.getListRoomIdsByUserId(userId);
     list_roomId.map((id) => {
-        socket.join(`${id}`);
+        console.log(id._id);
+        socket.join(`${id._id}`);
     })
+    console.log(socket.rooms);
     onConverMessage(socket, io);
-    onRoomMessage(socket);
+    onRoomMessage(socket, io);
     onFriendRequest(socket, io);
     onAddFriend(socket, io);
     onDisconnect(socket);
@@ -26,9 +30,9 @@ function onConverMessage(socket, io) {
     })
 }
 
-function onRoomMessage(socket) {
+function onRoomMessage(socket, io) {
     socket.on(SocketConsts.EVENT_SEND_ROOM_MESSAGE, (data) => {
-        socketController.roomMessageHandler(socket, data);
+        socketController.roomMessageHandler(socket, io, data);
     })
 }
 

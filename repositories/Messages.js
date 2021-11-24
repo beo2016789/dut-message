@@ -2,7 +2,8 @@ const Message = require('../models/Message');
 class MessageRepository {
     async createMessage(message) {
         try{
-            let result = await Message.create(message);
+            let ms = await Message.create(message);
+            let result = await Message.findById(ms._id).populate({path: 'author', select: ['_id', 'name', 'avatar']});
             return result;
         }catch(err){
             throw(err);

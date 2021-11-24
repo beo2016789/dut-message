@@ -60,7 +60,6 @@ class UserController {
     addFriend = async (req, res, next) => {
         try{
             await this._userService.addFriend(req.headers.id, req.body.toId);
-            await this._userService.addFriend(req.body.toId, req.headers.id);
             res.status(200).json({success: 'success'});
         } catch (err) {
             res.status(500).json({error: err});
@@ -76,7 +75,14 @@ class UserController {
         }
     }
 
-    
+    checkFriend = async (req, res, next) => {
+        try{
+            const check = await this._userService.checkFriend(req.headers.id, req.body.friendId);
+            res.status(200).json({"isFriend": check});
+        } catch (err) {
+            res.status(500).json({error: err})
+        }
+    }
 }
 
 module.exports = UserController;

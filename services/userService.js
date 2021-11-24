@@ -91,6 +91,19 @@ class UserService {
             throw(err);
         }
     }
+
+    async checkFriend(userId, friendId){
+        try{
+            const user = await this._userRepo.findUserById(userId);
+            if(user.friends.includes(friendId)){
+                return true;
+            } else {
+                return false;
+            }
+        } catch (err) {
+            throw(err);
+        }
+    }
 }
 
 module.exports = UserService;

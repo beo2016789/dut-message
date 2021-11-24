@@ -83,6 +83,24 @@ class UserController {
             res.status(500).json({error: err})
         }
     }
+
+    checkFriendRequest = async (req, res, next) => {
+        try{
+            const F_requestFromId = await this._userService.getFriendRequest(req.headers.id, req.body.toId);
+            if(F_requestFromId){
+                res.status(200).json({"friend-request": "send"});
+            } else {
+                const F_requestToId = await this._userService.getFriendRequest(req.body.toId, req.headers.id);
+                if(F_requestToId){
+                    res.status(200).json({"friend-request": "receive"});
+                } else {
+                    res.status(200).json({"friend-request": "no-interact"});
+                }
+            }
+        } catch (err) {
+            res.status(500).json({error: err})
+        }
+    }
 }
 
 module.exports = UserController;

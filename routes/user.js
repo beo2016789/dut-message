@@ -4,6 +4,7 @@ const router = express.Router();
 
 const {authMiddleware} = require('../utility/modulesInjection')
 router.post('/checkFriend', userController.checkFriend);
+router.post('/checkFriendRequest', userController.checkFriendRequest);
 
 router.use(authMiddleware.AuthenToken);
 

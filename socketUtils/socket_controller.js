@@ -43,7 +43,9 @@ class SocketController {
     }
 
     async removeFriendHandler(socket, io, data) {
-
+        await this._userService.removeFriend(data.fromId, data.toId);
+        io.to(`${this._socketRepo.getSocketIdByUserId(data.fromId)}`).emit(socketConsts.EVENT_RECEIVE_CANCEL_FRIEND, data.toId);
+        io.to(`${this._socketRepo.getSocketIdByUserId(data.toId)}`).emit(socketConsts.EVENT_RECEIVE_CANCEL_FRIEND, data.fromId);
     }
 
     async disconnectHandler(socket) {

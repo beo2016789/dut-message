@@ -87,6 +87,7 @@ class UserService {
     async removeFriend(userId, friendId) {
         try{
             await this._userRepo.removeFriend(userId, friendId);
+            await this._userRepo.removeFriend(friendId, userId);
         } catch (err) {
             throw(err);
         }

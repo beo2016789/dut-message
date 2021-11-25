@@ -6,9 +6,9 @@ const {authMiddleware} = require('../utility/modulesInjection')
 router.post('/checkFriend', userController.checkFriend);
 router.post('/checkFriendRequest', userController.checkFriendRequest);
 
-router.get('/friends', userController.getAllFriend);
 router.use(authMiddleware.AuthenToken);
 
+router.get('/friends', userController.getAllFriend);
 router.post('/logout', authController.logout);
 router.post('/find-by-phone', userController.findUserByPhone);
 router.get('friend-request', userController.getAllF_RequestTo);

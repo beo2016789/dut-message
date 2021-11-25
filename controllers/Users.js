@@ -88,17 +88,17 @@ class UserController {
         try{
             const check = await this._userService.checkFriend(req.headers.id, req.body.toId);
             if(check) {
-                res.status(200).json({"friend-request": "is friend"});
+                res.status(200).json({"message": "is friend"});
             } else {
                 const F_requestFromId = await this._userService.getFriendRequest(req.headers.id, req.body.toId);
                 if(F_requestFromId){
-                    res.status(200).json({"friend-request": "send"});
+                    res.status(200).json({"message": "have send add friend request"});
                 } else {
                     const F_requestToId = await this._userService.getFriendRequest(req.body.toId, req.headers.id);
                     if(F_requestToId){
-                        res.status(200).json({"friend-request": "receive"});
+                        res.status(200).json({"message": "have receive add friend request"});
                     } else {
-                        res.status(200).json({"friend-request": "no-interact"});
+                        res.status(200).json({"message": "no add friend request"});
                     }
                 }
             }

@@ -13,3 +13,4 @@ exports.EVENT_RECEIVE_FRIEND_REQUEST = 'receive-friend-request';
 exports.EVENT_ACCEPT_FRIEND_REQUEST = 'accept-friend-request';
 exports.EVENT_NOTIFY_ACCEPT_FRIEND = 'notify-accept-friend';
 exports.EVENT_CANCEL_FRIEND_REQUEST = 'cancel-friend-request';
+exports.EVENT_REMOVE_FRIEND_REQUEST = 'remove-friend-request';

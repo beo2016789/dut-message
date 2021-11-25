@@ -66,6 +66,15 @@ class UserService {
         }
     }
 
+    async getFriendRequestById(frId) {
+        try {
+            const F_request = await this._userRepo.getFriendRequestById(frId);
+            return F_request;
+        } catch (err) {
+            throw(err);
+        }
+    }
+
     async addFriend(userId, friendId) {
         try{
             await this._userRepo.addFriend(userId, friendId);

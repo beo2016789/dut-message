@@ -16,10 +16,11 @@ module.exports = async (socket, io) => {
     })
     console.log(socket.rooms);
     onConverMessage(socket, io);
-    onRoomMessage(socket, io);
+    onRoomMessage(socket);
     onFriendRequest(socket, io);
     onAddFriend(socket, io);
     onDisconnect(socket);
+    onCancelFriendRequest(socket, io);
     
     
 }
@@ -30,7 +31,7 @@ function onConverMessage(socket, io) {
     })
 }
 
-function onRoomMessage(socket, io) {
+function onRoomMessage(socket) {
     socket.on(SocketConsts.EVENT_SEND_ROOM_MESSAGE, (data) => {
         socketController.roomMessageHandler(socket, io, data);
     })
@@ -45,6 +46,12 @@ function onFriendRequest(socket, io) {
 function onAddFriend(socket, io) {
     socket.on(SocketConsts.EVENT_ACCEPT_FRIEND_REQUEST, (data) => {
         socketController.addFriendHandler(socket, io, data);
+    })
+}
+
+function onCancelFriendRequest(socket, io) {
+    socket.on(SocketConsts.EVENT_CANCEL_FRIEND_REQUEST, (data) => {
+        socketController.removeFriendRequest(socket, io, data);
     })
 }
 

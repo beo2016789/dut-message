@@ -94,6 +94,15 @@ class UserRepository {
         }
     }
 
+    async getFriendRequestById(frId) {
+        try{
+            const F_request = await FriendRequest.findById(frId);
+            return F_request;
+        } catch(err){
+            throw(err);
+        }
+    }
+
     async getAllF_RequestTo(userId) {
         try{
             const F_Requests = await FriendRequest.find({to: userId}).populate({path: 'to', select: ['_id', 'name', 'avatar']}).populate({path: 'from', select: ['_id', 'name', 'avatar']}); 

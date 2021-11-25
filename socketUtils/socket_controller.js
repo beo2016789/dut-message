@@ -9,8 +9,9 @@ class SocketController {
     }
 
     async converMessageHandler(socket, io, data) {
-        let message = await this._messageService.addMessageToConver(data.toUserId, {author: data.fromUserId, content: data.content});
+        let message = await this._messageService.addMessageToConver(data.converId, {author: data.fromUserId, content: data.content});
         let result = {
+            converId: data.converId,
             ...message,
         }
         io.to(`${this._socketRepo.getSocketIdByUserId(data.toUserId)}`).emit(socketConsts.EVENT_RECEIVE_CONVER_MESSAGE, result);
@@ -29,6 +30,7 @@ class SocketController {
     async addFriendHandler(socket, io, data) {
         await this._userService.addFriend(data.fromId, data.toId);
         const F_request = await this._userService.getFriendRequest(data.fromId, data.toId);
+        await this._messageService.createConversation([data.fromId, data.toId]);
         await this._userService.removeFriendRequest(F_request._id);
         io.to(`${this._socketRepo.getSocketIdByUserId(data.fromId)}`).emit(socketConsts.EVENT_NOTIFY_ACCEPT_FRIEND, F_request.to);
         io.to(`${this._socketRepo.getSocketIdByUserId(data.toId)}`).emit(socketConsts.EVENT_NOTIFY_ACCEPT_FRIEND, F_request.from);

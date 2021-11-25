@@ -58,5 +58,39 @@ class MessageService {
             throw(err);
         }
     }
+
+    async createConversation(arrayId) {
+        try {
+            let conversation = await this._conversationRepo.createConversation(arrayId);
+            return conversation;
+        } catch (error) {
+            throw(error);
+        }
+    }
+    
+    async updateSeen(converId, userInId) {
+        try {
+            await this._conversationRepo.updateSeen(converId, userInId);
+        } catch (error) {
+            throw(error);
+        }
+    }
+
+    async createRoom(arrayId){
+        try{
+            let room = await this._roomRepo.createRoom(arrayId);
+            return room;
+        } catch(err){
+            throw(err);
+        }
+    }
+
+    async updateSeen(roomId, memberId){
+        try{
+            await this._roomRepo.updateSeen(roomId, memberId);
+        } catch(err){
+            throw(err);
+        }
+    }
 }
 module.exports = MessageService;

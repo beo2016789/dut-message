@@ -2,22 +2,6 @@ class RoomService {
     constructor(roomRepo) {
         this._roomRepo = roomRepo;
     }
-    async createRoom(arrayId){
-        try{
-            let room = await this._roomRepo.createRoom(arrayId);
-            return room;
-        } catch(err){
-            throw(err);
-        }
-    }
-
-    async updateSeen(roomId, memberId){
-        try{
-            await this._roomRepo.updateSeen(roomId, memberId);
-        } catch(err){
-            throw(err);
-        }
-    }
 
     async getMessageByRoomId(roomId){
         try{

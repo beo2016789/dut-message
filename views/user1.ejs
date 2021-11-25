@@ -17,6 +17,10 @@
             $("#list_friend_request").append("_id: " + data._id + " from: " + data.from._id + " to: " + data.to._id);
         })
 
+        socket.on("receive-conver-message", (data) => {
+            $("#message_conver").append(data.converId + ", " + data.message.author.name + ": " + data.message.content);
+        })
+
         $(document).ready(function () {
             $("#send").click(function () {
                 socket.emit("send-room-message", {
@@ -31,6 +35,14 @@
                     toId: '615ddd8abdd0c39290cd17d4',
                 })
             })
+            $("#send_message_conver").click(function () {
+                socket.emit("send-conver-message", {
+                    converId: "615dda2bbdd0c39290cd17ca",
+                    fromUserId: "61581ec69a4b9f978cfcf7f4",
+                    content: "tin nhan conver tu user1",
+                    toUserId: "615ddd8abdd0c39290cd17d4",
+                })
+            })
         })
     </script>
     <title>Document</title>
@@ -41,6 +53,8 @@
     <div id="send">click send room</div>
     <h3 id="return"></h3>
     <h3 id="list_friend_request"></h3>
+    <h3 id="send_message_conver">Send Message conver</h3>
+    <h3 id="message_conver"></h3>
 </body>
 
 </html>

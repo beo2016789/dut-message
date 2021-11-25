@@ -33,7 +33,7 @@ function onConverMessage(socket, io) {
 
 function onRoomMessage(socket) {
     socket.on(SocketConsts.EVENT_SEND_ROOM_MESSAGE, (data) => {
-        socketController.roomMessageHandler(socket, io, data);
+        socketController.roomMessageHandler(socket, data);
     })
 }
 

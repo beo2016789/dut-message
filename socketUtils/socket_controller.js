@@ -9,10 +9,11 @@ class SocketController {
     }
 
     async converMessageHandler(socket, io, data) {
+        console.log(data.converId);
         let message = await this._messageService.addMessageToConver(data.converId, {author: data.fromUserId, content: data.content});
         let result = {
             converId: data.converId,
-            ...message,
+            message: message,
         }
         io.to(`${this._socketRepo.getSocketIdByUserId(data.toUserId)}`).emit(socketConsts.EVENT_RECEIVE_CONVER_MESSAGE, result);
     }

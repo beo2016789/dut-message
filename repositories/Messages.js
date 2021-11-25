@@ -3,6 +3,7 @@ class MessageRepository {
     async createMessage(message) {
         try{
             let ms = await Message.create(message);
+            console.log(ms._id);
             let result = await Message.findById(ms._id).populate({path: 'author', select: ['_id', 'name', 'avatar']});
             return result;
         }catch(err){

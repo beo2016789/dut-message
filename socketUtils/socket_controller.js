@@ -9,7 +9,10 @@ class SocketController {
     }
 
     async converMessageHandler(socket, io, data) {
-        const result = await this._messageService.addMessageToConver(data.toUserId, {author: data.fromUserId, content: data.content});
+        let message = await this._messageService.addMessageToConver(data.toUserId, {author: data.fromUserId, content: data.content});
+        let result = {
+            ...message,
+        }
         io.to(`${this._socketRepo.getSocketIdByUserId(data.toUserId)}`).emit(socketConsts.EVENT_RECEIVE_CONVER_MESSAGE, result);
     }
 
@@ -27,8 +30,8 @@ class SocketController {
         await this._userService.addFriend(data.fromId, data.toId);
         const F_request = await this._userService.getFriendRequest(data.fromId, data.toId);
         await this._userService.removeFriendRequest(F_request._id);
-        io.to(`${this._socketRepo.getSocketIdByUserId(data.fromId)}`).emit(socketConsts.EVENT_NOTIFY_ACCEPT_FRIEND, F_request);
-        io.to(`${this._socketRepo.getSocketIdByUserId(data.toId)}`).emit(socketConsts.EVENT_NOTIFY_ACCEPT_FRIEND, F_request);
+        io.to(`${this._socketRepo.getSocketIdByUserId(data.fromId)}`).emit(socketConsts.EVENT_NOTIFY_ACCEPT_FRIEND, F_request.to);
+        io.to(`${this._socketRepo.getSocketIdByUserId(data.toId)}`).emit(socketConsts.EVENT_NOTIFY_ACCEPT_FRIEND, F_request.from);
     }
 
     async removeFriendRequest(socket, io, data) {
@@ -37,6 +40,10 @@ class SocketController {
         if(data.fromId == F_request.from){
             io.to(`${this._socketRepo.getSocketIdByUserId(data.toId)}`).emit(socketConsts.EVENT_REMOVE_FRIEND_REQUEST, F_request)
         }
+    }
+
+    async removeFriendHandler(socket, io, data) {
+
     }
 
     async disconnectHandler(socket) {

@@ -21,7 +21,7 @@ module.exports = async (socket, io) => {
     onAddFriend(socket, io);
     onDisconnect(socket);
     onCancelFriendRequest(socket, io);
-    
+    onDelFriend(socket, io);
     
 }
 
@@ -46,6 +46,12 @@ function onFriendRequest(socket, io) {
 function onAddFriend(socket, io) {
     socket.on(SocketConsts.EVENT_ACCEPT_FRIEND_REQUEST, (data) => {
         socketController.addFriendHandler(socket, io, data);
+    })
+}
+
+function onDelFriend(socket, io){
+    socket.on(SocketConsts.EVENT_SEND_CANCEL_FRIEND, (data) => {
+        socketController.removeFriendHandler(socket, io, data);
     })
 }
 

@@ -68,7 +68,7 @@ class UserController {
 
     getAllFriend = async (req, res, next) => {
         try{
-            const list_friend = this._userService.getAllFriends(req.headers.id);
+            const list_friend = await this._userService.getAllFriends(req.headers.id);
             res.status(200).json(list_friend);
         } catch (err) {
             res.status(500).json({error: err});

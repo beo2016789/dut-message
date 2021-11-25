@@ -87,7 +87,7 @@ class UserRepository {
 
     async getFriendRequest(fromId, toId){
         try{
-            let F_request = await FriendRequest.findOne({from: fromId, to: toId}).populate({path: 'from', select: ['_id', 'name', 'avatar']}).populate({path: 'to', select: ['_id', 'name', 'avatar']});
+            let F_request = await FriendRequest.findOne({from: fromId, to: toId}).populate({path: 'from', select: ['_id', 'name', 'avatar', 'phone']}).populate({path: 'to', select: ['_id', 'name', 'avatar', 'phone']});
             return F_request;
         } catch(err){
             throw(err);
@@ -130,7 +130,7 @@ class UserRepository {
 
     async getAllFriends(userId){
         try{
-            const list_friend = await User.findById(userId).populate({path: 'friends', select: ['_id', 'name', 'avatar']});
+            const list_friend = await User.findById(userId).populate({path: 'friends', select: ['_id', 'name', 'avatar', 'phone']});
             return list_friend.friends;
         } catch(err) {
             throw(err);

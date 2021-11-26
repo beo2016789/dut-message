@@ -19,7 +19,11 @@ class SocketController {
     }
 
     async  roomMessageHandler(socket, data) {
-        const result = await this._messageService.addMessageToRoom(data.roomId, {author: data.fromUserId, content: data.content});
+        let message = await this._messageService.addMessageToRoom(data.roomId, {author: data.fromUserId, content: data.content});
+        let result = {
+            roomId: data.roomId,
+            message: message,
+        }
         socket.to(data.roomId).emit(socketConsts.EVENT_RECEIVE_ROOM_MESSAGE, result);
     }
 

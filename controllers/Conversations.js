@@ -23,7 +23,7 @@ class ConversationController {
 
     getMessageByConverId = async (req, res, next) => {
         try{
-            const list_message = await this._conversationService.getMessageByConverId(req.body.converId);
+            const list_message = await this._conversationService.getMessageByConverId(req.params.converId);
             res.status(200).json(list_message);
         } catch (error) {
             res.status(500).json(error);

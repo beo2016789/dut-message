@@ -33,7 +33,7 @@ class ConversationRepository {
     }
     async getMessageByConverId(converId) {
         try{
-            const conversation = await Conversation.findById(converId).populate('list_message');
+            const conversation = await Conversation.findById(converId).populate({path: 'list_message', populate: {path: 'author', select: ['_id', 'name', 'avatar', 'phone']}});
             return conversation.list_message;
         } catch(error) {
             throw(error);

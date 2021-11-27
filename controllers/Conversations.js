@@ -29,6 +29,15 @@ class ConversationController {
             res.status(500).json(error);
         }
     }
+
+    getConverById = async (req, res, next) => {
+        try{
+            const conver = await this._conversationService.getConverById(req.params.converId);
+            res.status(200).json(conver);
+        } catch (error) {
+            res.status(500).json(error);
+        }
+    }
 }
 
 module.exports = ConversationController;

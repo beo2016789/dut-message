@@ -7,7 +7,8 @@ class RoomRepository {
                 memberArray.push({member: id});
             })
             const room = await Room.create({members: memberArray});
-            return room;
+            const result = await RoomRepository.findById(room._id).populate('members.member');
+            return result;
         } catch (error) {
             throw(error);
         }
@@ -60,6 +61,15 @@ class RoomRepository {
         try{ 
             const list_roomId = await Room.find({members: {$elemMatch: {member: userId}}}, '_id');  
             return list_roomId;
+        } catch (error) {
+            throw(error);
+        }
+    }
+
+    async getRoomById(roomId) {
+        try{ 
+            const room = await Room.findById(roomId, ['_id', 'name', 'members']).populate({path: 'members.member', select: ['_id', 'name', 'avatar', 'phone']});
+            return room;
         } catch (error) {
             throw(error);
         }

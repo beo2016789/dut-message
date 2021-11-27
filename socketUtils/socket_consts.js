@@ -16,3 +16,6 @@ exports.EVENT_CANCEL_FRIEND_REQUEST = 'cancel-friend-request';
 exports.EVENT_REMOVE_FRIEND_REQUEST = 'remove-friend-request';
 exports.EVENT_SEND_CANCEL_FRIEND = 'send-cancel-friend';
 exports.EVENT_RECEIVE_CANCEL_FRIEND = 'receive-cancel-friend';
+
+exports.EVENT_SEND_JOIN_ROOM = "send-join-room";
+exports.EVENT_RECEIVE_JOIN_ROOM = "receive-join-room";

@@ -49,16 +49,25 @@ class ConversationRepository {
                 select: ['_id', 'name', 'avatar']
             }).populate({
                 path: 'list_message',
-                options: {
-                    limit: 1, 
-                    sort: {$natural: -1}
-                },
+                // options: {
+                //     limit: 1, 
+                //     sort: {$natural: -1}
+                // },
                 populate: {
                     path: 'author', 
                     select: ['_id', 'name', 'avatar', 'phone']
                 }
             });
             return list_conver;
+        } catch(error) {
+            throw(error);
+        }
+    }
+
+    async getConverById(converId) {
+        try{
+            const conversation = await Conversation.findById(converId, ['_id', 'userIns']).populate({path: 'userIns.userIn', select: ['_id', 'name', 'avatar', 'phone']});
+            return conversation;
         } catch(error) {
             throw(error);
         }

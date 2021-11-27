@@ -29,5 +29,14 @@ class RoomService {
             throw(err);
         }
     }
+
+    async getRoomById(roomId) {
+        try{
+            const room = await this._roomRepo.getRoomById(roomId);
+            return room;
+        } catch(err){
+            throw(err);
+        }
+    }
 }
 module.exports = RoomService;

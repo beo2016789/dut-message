@@ -22,7 +22,7 @@ module.exports = async (socket, io) => {
     onDisconnect(socket);
     onCancelFriendRequest(socket, io);
     onDelFriend(socket, io);
-    
+    onJoinRoom(socket, io);
 }
 
 function onConverMessage(socket, io) {
@@ -58,6 +58,12 @@ function onDelFriend(socket, io){
 function onCancelFriendRequest(socket, io) {
     socket.on(SocketConsts.EVENT_CANCEL_FRIEND_REQUEST, (data) => {
         socketController.removeFriendRequest(socket, io, data);
+    })
+}
+
+function onJoinRoom(socket, io) {
+    socket.on(SocketConsts.EVENT_SEND_JOIN_ROOM, (data) => {
+        socketController.joinRoomHandler(socket, io, data);
     })
 }
 

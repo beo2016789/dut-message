@@ -3,6 +3,15 @@ class ConversationService {
         this._conversationRepo = conversationRepo;
     }
 
+    async getConverById(converId){
+        try{
+            const conver = await this._conversationRepo.getConverById(converId);
+            return conver;
+        } catch(error){
+            throw(error);
+        }
+    }
+
     async getAllConverByUserId(userId) {
         try{
             const list_conver = await this._conversationRepo.getAllConverByUserId(userId);

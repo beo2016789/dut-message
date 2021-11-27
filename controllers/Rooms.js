@@ -38,5 +38,14 @@ class RoomController {
             res.status(500).json(error);
         }
     }
+
+    getRoomById = async (req, res, next) => {
+        try{
+            const room = await this._roomService.getRoomById(req.params.roomId);
+            res.status(200).json(room);
+        } catch(error){
+            res.status(500).json(error);
+        }
+    }
 }
 module.exports = RoomController;

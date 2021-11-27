@@ -6,6 +6,7 @@ const {authMiddleware} = require('../utility/modulesInjection')
 router.use(authMiddleware.AuthenToken);
 
 router.get('/messages', roomController.getMessageByRoomId);
+router.get('/:roomId', roomController.getRoomById);
 router.get('/', roomController.getAllRoomByUserId);
 router.post('/create', roomController.createRoom);
 

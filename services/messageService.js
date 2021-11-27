@@ -67,8 +67,17 @@ class MessageService {
             throw(error);
         }
     }
+
+    async getConverById(converId) {
+        try{
+            let conver = await this._conversationRepo.getConverById(converId);
+            return conver;
+        } catch (error) {
+            throw(error);
+        }
+    }
     
-    async updateSeen(converId, userInId) {
+    async updateSeenConver(converId, userInId) {
         try {
             await this._conversationRepo.updateSeen(converId, userInId);
         } catch (error) {
@@ -85,7 +94,16 @@ class MessageService {
         }
     }
 
-    async updateSeen(roomId, memberId){
+    async getRoomById(roomId) {
+        try{
+            let room = await this._roomRepo.getRoomById(roomId);
+            return room;
+        } catch (err) {
+            throw(err);
+        }
+    }
+
+    async updateSeenRoom(roomId, memberId){
         try{
             await this._roomRepo.updateSeen(roomId, memberId);
         } catch(err){

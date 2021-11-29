@@ -74,5 +74,21 @@ class RoomRepository {
             throw(error);
         }
     }
+
+    async addUserToRoom(roomId, userId) {
+        try{ 
+            await Room.findByIdAndUpdate(roomId, {$push: {members: {member: userId}}});
+        } catch (error) {
+            throw(error);
+        }
+    }
+
+    async removeUserfromRoom(roomId, userId) {
+        try{ 
+            await Room.findByIdAndUpdate(roomId, {$pull: {members: {member: userId}}});
+        } catch (error) {
+            throw(error);
+        }
+    }
 }
 module.exports = RoomRepository;

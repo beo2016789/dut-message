@@ -38,5 +38,21 @@ class RoomService {
             throw(err);
         }
     }
+
+    async addUserToRoom(roomId, userId) {
+        try{
+            await this._roomRepo.addUserToRoom(roomId, userId);
+        } catch(err){
+            throw(err);
+        }
+    }
+
+    async removeUserfromRoom(roomId, userId) {
+        try{
+            await this._roomRepo.removeUserfromRoom(roomId, userId);
+        } catch(err){
+            throw(err);
+        }
+    }
 }
 module.exports = RoomService;

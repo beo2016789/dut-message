@@ -17,5 +17,11 @@ exports.EVENT_REMOVE_FRIEND_REQUEST = 'remove-friend-request';
 exports.EVENT_SEND_CANCEL_FRIEND = 'send-cancel-friend';
 exports.EVENT_RECEIVE_CANCEL_FRIEND = 'receive-cancel-friend';
 
+exports.EVENT_SEND_CREATE_ROOM = 'send-create-room';
+exports.EVENT_RECEIVE_CREATE_ROOM = 'receive-create-room';
+
 exports.EVENT_SEND_JOIN_ROOM = "send-join-room";
 exports.EVENT_RECEIVE_JOIN_ROOM = "receive-join-room";
+
+exports.EVENT_SEND_LEAVE_ROOM = "send-leave-room";
+exports.EVENT_RECEIVE_LEAVE_ROOM = "receive-leave-room"

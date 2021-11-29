@@ -8,7 +8,7 @@ class ConversationController {
             let conversation = await this._conversationService.createConversation([req.headers.id, req.body.id])
             res.status(200).json(conversation);
         } catch (error) {
-            res.status(500).json(error);
+            res.status(500).json({error: error});
         }
     }
 
@@ -17,7 +17,7 @@ class ConversationController {
             const list_conver = await this._conversationService.getAllConverByUserId(req.headers.id);
             res.status(200).json(list_conver);
         } catch (error) {
-            res.status(500).json(error);
+            res.status(500).json({error: error});
         }
     }
 
@@ -26,7 +26,7 @@ class ConversationController {
             const list_message = await this._conversationService.getMessageByConverId(req.params.converId);
             res.status(200).json(list_message);
         } catch (error) {
-            res.status(500).json(error);
+            res.status(500).json({error: error});
         }
     }
 
@@ -35,7 +35,7 @@ class ConversationController {
             const conver = await this._conversationService.getConverById(req.params.converId);
             res.status(200).json(conver);
         } catch (error) {
-            res.status(500).json(error);
+            res.status(500).json({error: error});
         }
     }
 }

@@ -64,10 +64,22 @@ class SocketController {
         io.to(`${this._socketRepo.getSocketIdByUserId(data.toId)}`).emit(socketConsts.EVENT_RECEIVE_CANCEL_FRIEND, data.fromId);
     }
 
+    async createRommHandler(socket, io, data) {
+        const arrayId = [data.author].concat(data.ids)
+        const room = await this._messageService.createRoom(arrayId);
+        arrayId.map((id) => {
+            io.to(`${this._socketRepo.getSocketIdByUserId(id)}`).emit(socketConsts.EVENT_RECEIVE_CREATE_ROOM, room);
+        })
+    }
+
     async joinRoomHandler(socket, io, data) {
         const room = await this._messageService.getRoomById(data.roomId);
         socket.join(`${data.roomId}`);
         io.to(`${this._socketRepo.getSocketIdByUserId(data.fromId)}`).emit(socketConsts.EVENT_RECEIVE_JOIN_ROOM, room);
+    }
+
+    async leaveRoomHandler(socket, io, data) {
+        const room = await this._messageService.getRoomById(data.roomId);
     }
 
     async disconnectHandler(socket) {

@@ -7,7 +7,7 @@ class AuthController {
             let response = await this._authService.login(req.body.username, req.body.password);
             res.status(200).json(response);
         } catch (err) {
-            res.status(500).json(err);
+            res.status(500).json({error: err});
         }
     }
 
@@ -38,7 +38,7 @@ class AuthController {
                 res.status(201).json(newUser);
             }
         } catch (err) {
-            res.status(500).json(err);
+            res.status(500).json({error: err});
         }
     }
     logout = async (req, res, next) => {
@@ -47,7 +47,7 @@ class AuthController {
             await this._authService.logout(req.body.id, refreshToken);
             res.status(200).json('Logout success');
         } catch (err) {
-            res.status(500).json(err);
+            res.status(500).json({error: err});
         }
     }
 

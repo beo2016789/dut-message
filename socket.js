@@ -64,7 +64,7 @@ function onCancelFriendRequest(socket, io) {
 }
 
 function onCreateRoom(socket, io) {
-    socket.on(SocketConsts.EVENT_CREATE_ROOM, (data) => {
+    socket.on(SocketConsts.EVENT_SEND_CREATE_ROOM, (data) => {
         socketController.createRommHandler(socket, io, data);
     })
 }

@@ -41,10 +41,10 @@ class RoomRepository {
 
     async getMessageByRoomId(roomId) {
         try{
-            const room = await Room.findById(roomId).populate('list_message');
+            const room = await Room.findById(roomId).populate({path: 'list_message', populate: {path: 'author', select: ['_id', 'name', 'avatar', 'phone']}});
             return room.list_message;
         } catch (error) {
-
+            throw(error);
         }
     }
 

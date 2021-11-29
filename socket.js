@@ -19,7 +19,7 @@ module.exports = async (socket, io) => {
     onRoomMessage(socket);
     onFriendRequest(socket, io);
     onAddFriend(socket, io);
-    onDisconnect(socket);
+    onDisconnect(socket, io);
     onCancelFriendRequest(socket, io);
     onDelFriend(socket, io);
     onJoinRoom(socket, io);
@@ -81,8 +81,8 @@ function onLeaveRoom(socket, io) {
     })
 }
 
-function onDisconnect(socket) {
+function onDisconnect(socket, io) {
     socket.on(SocketConsts.ON_DISCONNECT, () => {
-        socketController.disconnectHandler(socket);
+        socketController.disconnectHandler(socket, io);
     })
 }

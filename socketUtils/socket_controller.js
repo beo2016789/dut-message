@@ -82,8 +82,9 @@ class SocketController {
         const room = await this._messageService.getRoomById(data.roomId);
     }
 
-    async disconnectHandler(socket) {
-        
+    async disconnectHandler(socket, io) {
+        console.log("Disconnect: " + socket.id)
+        this._socketRepo.removeUserBySocketId(socket.id);
     }
 }
 

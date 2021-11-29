@@ -5,7 +5,7 @@ const socketRouter = require('./socket');
 
 const PORT = process.env.PORT || 3000
 
-io.sockets.on('connection', (socket) => {
+io.sockets.on('connection', async (socket) => {
     socketRouter(socket, io);
 });
 

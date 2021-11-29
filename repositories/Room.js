@@ -1,12 +1,12 @@
 const Room = require('../models/Room');
 class RoomRepository {
-    async createRoom(arrayId){
+    async createRoom(arrayId, nameRoom){
         try {
             let memberArray = [];
             arrayId.map((id) => {
                 memberArray.push({member: id});
             })
-            const room = await Room.create({members: memberArray});
+            const room = await Room.create({name: nameRoom, members: memberArray});
             const result = await RoomRepository.findById(room._id).populate('members.member');
             return result;
         } catch (error) {

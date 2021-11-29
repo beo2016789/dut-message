@@ -85,9 +85,10 @@ class MessageService {
         }
     }
 
-    async createRoom(arrayId){
+    async createRoom(arrayId, nameAuthor){
         try{
-            let room = await this._roomRepo.createRoom(arrayId);
+            const nameRoom = "Nhóm của " + nameAuthor + "và " + (arrayId.length - 1) + " người bạn";
+            let room = await this._roomRepo.createRoom(arrayId, nameRoom);
             return room;
         } catch(err){
             throw(err);

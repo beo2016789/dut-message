@@ -64,9 +64,9 @@ class SocketController {
         io.to(`${this._socketRepo.getSocketIdByUserId(data.toId)}`).emit(socketConsts.EVENT_RECEIVE_CANCEL_FRIEND, data.fromId);
     }
 
-    async createRommHandler(socket, io, data) {
-        const arrayId = [data.author].concat(data.ids)
-        const room = await this._messageService.createRoom(arrayId);
+    async createRoomHandler(socket, io, data) {
+        const arrayId = [data.authorId].concat(data.ids)
+        const room = await this._messageService.createRoom(arrayId, data.authorName);
         arrayId.map((id) => {
             io.to(`${this._socketRepo.getSocketIdByUserId(id)}`).emit(socketConsts.EVENT_RECEIVE_CREATE_ROOM, room);
         })

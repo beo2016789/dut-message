@@ -23,7 +23,7 @@ class RoomController {
     
     getMessageByRoomId = async (req, res, next) => {
         try{
-            const list_message = await this._roomService.getMessageByRoomId(req.body.roomId);
+            const list_message = await this._roomService.getMessageByRoomId(req.params.roomId);
             res.status(200).json(list_message);
         } catch(error){
             res.status(500).json({error: error});

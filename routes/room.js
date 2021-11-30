@@ -5,7 +5,7 @@ const router = express.Router();
 const {authMiddleware} = require('../utility/modulesInjection')
 // router.use(authMiddleware.AuthenToken);
 
-router.get('/messages', roomController.getMessageByRoomId);
+router.get('/messages/:roomId', roomController.getMessageByRoomId);
 router.get('/:roomId', roomController.getRoomById);
 router.get('/roomIds', roomController.getAllRoomIdsByUserId);
 router.get('/', roomController.getAllRoomByUserId);

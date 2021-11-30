@@ -7,7 +7,7 @@ class RoomRepository {
                 memberArray.push({member: id});
             })
             const room = await Room.create({name: nameRoom, members: memberArray});
-            const result = await RoomRepository.findById(room._id).populate('members.member');
+            const result = await Room.findById(room._id).populate('members.member');
             return result;
         } catch (error) {
             throw(error);

@@ -11,10 +11,8 @@ module.exports = async (socket, io) => {
     socketRepo.addUserToMap(userId, socket.id);
     const list_roomId = await roomService.getListRoomIdsByUserId(userId);
     list_roomId.map((id) => {
-        console.log(id._id);
         socket.join(`${id._id}`);
     })
-    console.log(socket.rooms);
     onConverMessage(socket, io);
     onRoomMessage(socket);
     onFriendRequest(socket, io);
@@ -65,7 +63,7 @@ function onCancelFriendRequest(socket, io) {
 
 function onCreateRoom(socket, io) {
     socket.on(SocketConsts.EVENT_SEND_CREATE_ROOM, (data) => {
-        socketController.createRommHandler(socket, io, data);
+        socketController.createRoomHandler(socket, io, data);
     })
 }
 

@@ -1,8 +1,9 @@
 class MessageService {
-    constructor(messageRepo, conversationRepo, roomRepo) {
+    constructor(messageRepo, conversationRepo, roomRepo, userRepo) {
         this._messageRepo = messageRepo;
         this._conversationRepo = conversationRepo;
         this._roomRepo = roomRepo;
+        this._userRepo = userRepo;
     }
 
     async addMessageToConver(converId, message){
@@ -61,7 +62,18 @@ class MessageService {
 
     async createConversation(arrayId) {
         try {
-            let conversation = await this._conversationRepo.createConversation(arrayId);
+            const list_name = await Promise.all(arrayId.map(async (id) => {
+                const name = await this._userRepo.getNameById(id);
+                return  name;
+            }))
+            const arrayUser = [];
+            for(let i = 0; i < arrayId.length; i++) {
+                arrayUser.push({
+                    id: arrayId[i],
+                    nick_name: list_name[i],
+                })
+            }
+            let conversation = await this._conversationRepo.createConversation(arrayUser);
             return conversation;
         } catch (error) {
             throw(error);
@@ -88,8 +100,19 @@ class MessageService {
     async createRoom(arrayId, nameAuthor){
         try{
             const nameRoom = "Nhóm của " + nameAuthor + " và " + (arrayId.length - 1) + " người bạn";
-            const content = nameAuthor + " đã tạo nhóm này"
-            let room = await this._roomRepo.createRoom(arrayId, nameRoom);
+            const content = nameAuthor + " đã tạo nhóm này";
+            let arrayMember = [];
+            const list_name = await Promise.all(arrayId.map(async (id) => {
+                const name = await this._userRepo.getNameById(id);
+                return  name;
+            }))
+            for(let i = 0; i < arrayId.length; i++) {
+                arrayMember.push({
+                    id: arrayId[i],
+                    nick_name: list_name[i],
+                });
+            }
+            let room = await this._roomRepo.createRoom(arrayMember, nameRoom);
             await this.addMessageToRoom(room._id, {author: arrayId[0], content: content});
             const result_room = await this._roomRepo.getRoomByIdHaveListMessage(room._id);
             return result_room;

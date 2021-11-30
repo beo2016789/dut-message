@@ -183,6 +183,16 @@ class UserRepository {
             throw(err);
         }
     }
+
+    async getNameById(userId){
+        try{
+            const user = await User.findById(userId);
+            const name = user.name;
+            return name;
+        } catch(err){
+            throw(err);
+        }
+    }
 }
 
 module.exports = UserRepository

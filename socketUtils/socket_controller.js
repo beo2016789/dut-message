@@ -66,7 +66,7 @@ class SocketController {
 
     async createRoomHandler(socket, io, data) {
         const arrayId = [data.authorId].concat(data.ids)
-        const room = await this._messageService.createRoom(arrayId, data.authorName);
+        const room = await this._messageService.createRoom(arrayId, data.nameAuthor);
         arrayId.map((id) => {
             io.to(`${this._socketRepo.getSocketIdByUserId(id)}`).emit(socketConsts.EVENT_RECEIVE_CREATE_ROOM, room);
         })

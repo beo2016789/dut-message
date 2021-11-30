@@ -1,8 +1,15 @@
 const Conversation = require('../models/Conversation');
 class ConversationRepository {
-    async createConversation(arrayId) {
+    async createConversation(arrayUser) {
         try {
-            let conversation = await Conversation.create({userIns: [{userIn: arrayId[0]}, {userIn: arrayId[1]}]});
+            let arrayUserIn = [];
+            arrayUser.map(user => {
+                arrayUserIn.push({
+                    userIn: user.id,
+                    nick_name: user.nick_name,
+                })
+            })
+            let conversation = await Conversation.create({userIns: arrayUserIn});
             return conversation;
         } catch (error) {
             throw(error);

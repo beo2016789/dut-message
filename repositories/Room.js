@@ -1,10 +1,10 @@
 const Room = require('../models/Room');
 class RoomRepository {
-    async createRoom(arrayId, nameRoom){
+    async createRoom(arrayMember, nameRoom){
         try {
             let memberArray = [];
-            arrayId.map((id) => {
-                memberArray.push({member: id});
+            arrayMember.map((member) => {
+                memberArray.push({member: member.id, nick_name: member.nick_name});
             })
             const room = await Room.create({name: nameRoom, members: memberArray});
             const result = await Room.findById(room._id, ['_id', 'name', 'members']).populate({path: 'members.member', select: ['_id', 'name', 'avatar', 'phone']});

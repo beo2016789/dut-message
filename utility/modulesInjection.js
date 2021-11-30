@@ -31,7 +31,7 @@ let userService = new UserService(userRepo);
 let userController = new UserController(userService);
 
 let messageRepo = new MessageRepository();
-let messageService = new MessageService(messageRepo, conversationRepo, roomRepo);
+let messageService = new MessageService(messageRepo, conversationRepo, roomRepo, userRepo);
 
 
 

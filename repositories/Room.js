@@ -12,7 +12,6 @@ class RoomRepository {
         } catch (error) {
             throw(error);
         }
-
     }
 
     async updateSeen(roomId, memberId) {
@@ -69,6 +68,15 @@ class RoomRepository {
     async getRoomById(roomId) {
         try{ 
             const room = await Room.findById(roomId, ['_id', 'name', 'members']).populate({path: 'members.member', select: ['_id', 'name', 'avatar', 'phone']});
+            return room;
+        } catch (error) {
+            throw(error);
+        }
+    }
+
+    async getRoomByIdHaveListMessage(roomId) {
+        try{ 
+            const room = await Room.findById(roomId).populate({path: 'members.member', select: ['_id', 'name', 'avatar', 'phone']}).populate({path: 'list_message', populate: {path: 'author', select: ['_id', 'name', 'avatar', 'phone']}});
             return room;
         } catch (error) {
             throw(error);

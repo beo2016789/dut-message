@@ -17,9 +17,6 @@ let userRepo = new UserRepository();
 let authService = new AuthService(userRepo);
 let authController = new AuthController(authService);
 
-let userService = new UserService(userRepo);
-let userController = new UserController(userService);
-
 let authMiddleware = new AuthMiddleware(userRepo);
 
 let roomRepo = new RoomRepository();
@@ -29,6 +26,9 @@ let roomController = new RoomController(roomService);
 let conversationRepo = new ConversationRepository();
 let conversationService = new ConversationService(conversationRepo);
 let conversationController = new ConversationController(conversationService);
+
+let userService = new UserService(userRepo);
+let userController = new UserController(userService);
 
 let messageRepo = new MessageRepository();
 let messageService = new MessageService(messageRepo, conversationRepo, roomRepo);

@@ -88,7 +88,7 @@ class MessageService {
     async createRoom(arrayId, nameAuthor){
         try{
             const nameRoom = "Nhóm của " + nameAuthor + " và " + (arrayId.length - 1) + " người bạn";
-            const content = nameAuthor + " đã tạo nhóm này."
+            const content = nameAuthor + " đã tạo nhóm này"
             let room = await this._roomRepo.createRoom(arrayId, nameRoom);
             await this.addMessageToRoom(room._id, {author: arrayId[0], content: content});
             const result_room = await this._roomRepo.getRoomByIdHaveListMessage(room._id);

@@ -114,6 +114,28 @@ class UserService {
             throw(err);
         }
     }
+
+    async updateInfoUser(userId, name, email){
+        try {
+            await this._userRepo.updateInfoUser(userId, {name: name, email: email});
+        } catch (err) {
+            throw(err);
+        }
+    }
+
+    async resetPassword(userId, inputPassword) {
+        try{
+            const checkCurrentPassword = await this._userRepo.checkPassword(userId, inputPassword.current);
+            if(checkCurrentPassword) {
+                await this._userRepo.changePassword(userId, inputPassword.new);
+                return true;
+            } else {
+                return false;
+            }
+        } catch (err) {
+            throw(err);
+        }
+    }
 }
 
 module.exports = UserService;

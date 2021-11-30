@@ -155,8 +155,17 @@ class UserRepository {
 
     async changePassword(userId, password){
         try{
-            await User.findByIdAndUpdate(userId, {password: password});
+            let hash = await bcrypt.hash(password, 10);
+            await User.findByIdAndUpdate(userId, {password: hash});
         }catch(err){
+            throw(err);
+        }
+    }
+
+    async updateInfoUser(userId, info){
+        try{
+            await User.findByIdAndUpdate(userId, {name: info.name, email: info.email});
+        } catch(err){
             throw(err);
         }
     }

@@ -7,8 +7,8 @@ const {authMiddleware} = require('../utility/modulesInjection')
 
 router.get('/messages', roomController.getMessageByRoomId);
 router.get('/:roomId', roomController.getRoomById);
-router.get('/', roomController.getAllRoomByUserId);
 router.get('/roomIds', roomController.getAllRoomIdsByUserId);
+router.get('/', roomController.getAllRoomByUserId);
 router.post('/create', roomController.createRoom);
 router.patch('/addUserfromRoom', roomController.addUserfromRoom);
 router.patch('/removeUserfromRoom', roomController.removeUserfromRoom);

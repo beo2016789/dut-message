@@ -106,6 +106,34 @@ class UserController {
             res.status(500).json({error: err})
         }
     }
+
+    updateInfoUser = async (req, res, next) => {
+        try {
+            await this._userService.updateInfoUser(req.headers.id, req.body.name, req.body.email);
+            res.status(200).json({success: 'success'});
+        } catch (err) {
+            res.status(500).json({error: err});
+        }
+    }
+
+    resetPassword = async (req, res, next) => {
+        try{
+            const checkResetPassword = await this._userService.resetPassword(
+                req.headers.id,
+                {
+                    current: req.body.currentPassword,
+                    new: req.body.newPassword
+                }
+            )
+            if(checkResetPassword) {
+                res.status(200).json({success: checkResetPassword});
+            } else {
+                res.status(301).json({success: checkResetPassword});
+            }
+        } catch (err) {
+            res.status(500).json({error: err});
+        }
+    }
 }
 
 module.exports = UserController;

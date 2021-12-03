@@ -97,9 +97,8 @@ class MessageService {
         }
     }
 
-    async createRoom(arrayId, nameAuthor){
+    async createRoom(arrayId, nameAuthor, nameRoom) {
         try{
-            const nameRoom = "Nhóm của " + nameAuthor + " và " + (arrayId.length - 1) + " người bạn";
             const content = nameAuthor + " đã tạo nhóm này";
             let arrayMember = [];
             const list_name = await Promise.all(arrayId.map(async (id) => {

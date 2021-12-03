@@ -65,8 +65,11 @@ class SocketController {
     }
 
     async createRoomHandler(socket, io, data) {
+        if(data.nameRoom == undefined || data.nameRoom == "") {
+            data.nameRoom = "Nhóm của bạn và " + data.ids.size() + " người khác";
+        }
         const arrayId = [data.authorId].concat(data.ids)
-        const room = await this._messageService.createRoom(arrayId, data.nameAuthor);
+        const room = await this._messageService.createRoom(arrayId, data.nameAuthor, data.nameRoom);
         arrayId.map((id) => {
             io.to(`${this._socketRepo.getSocketIdByUserId(id)}`).emit(socketConsts.EVENT_RECEIVE_CREATE_ROOM, room);
         })

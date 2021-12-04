@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const mongooseDelete = require('mongoose-delete');
 
 const messageSchema = new mongoose.Schema({
     author: {type: mongoose.Schema.Types.ObjectId, ref: "User"},
@@ -9,5 +10,9 @@ const messageSchema = new mongoose.Schema({
 }, {
     timestamps: true,
 });
+
+messageSchema.plugin(mongooseDelete, {
+    deleteAt: true,
+})
 
 module.exports = mongoose.model('Message', messageSchema);

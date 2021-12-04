@@ -20,7 +20,7 @@ class MessageRepository {
 
     async removeMessage(messageId) {
         try{
-            await Message.findByIdAndRemove(messageId);
+            await Message.delete({_id: messageId});
         } catch(err){
             throw(err);
         }

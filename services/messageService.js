@@ -16,16 +16,15 @@ class MessageService {
         }
     }
 
-    async removeMessageToConver(converId, messageId){
+    async removeMessage(messageId){
         try{
-            await this._conversationRepo.removeMessage(converId, messageId);
             await this._messageRepo.removeMessage(messageId);
         } catch(err){
             throw(err);
         }
     }
 
-    async softRemoveMessageToConver(messageId, userId){
+    async softRemoveMessage(messageId, userId){
         try{
             await this._messageRepo.softRemoveMessage(messageId, userId);
         } catch(err){
@@ -38,23 +37,6 @@ class MessageService {
             const result = await this._messageRepo.createMessage(message);
             await this._roomRepo.addMessage(roomId, result._id);
             return result;
-        } catch(err){
-            throw(err);
-        }
-    }
-    
-    async removeMessageToRoom(roomId, messageId){
-        try{
-            await this._roomRepo.removeMessage(roomId, messageId);
-            await this._messageRepo.removeMessage(messageId);
-        } catch(err){
-            throw(err);
-        }
-    }
-
-    async softRemoveMessageToRoom(messageId, userId){
-        try{
-            await this._messageRepo.softRemoveMessage(messageId, userId);
         } catch(err){
             throw(err);
         }
@@ -125,6 +107,14 @@ class MessageService {
             let room = await this._roomRepo.getRoomById(roomId);
             return room;
         } catch (err) {
+            throw(err);
+        }
+    }
+
+    async removeUserFromRoom(roomId, userId) {
+        try{
+            await this._roomRepo.removeUserfromRoom(roomId, userId);
+        } catch(err) {
             throw(err);
         }
     }

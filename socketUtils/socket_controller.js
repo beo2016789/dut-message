@@ -82,7 +82,18 @@ class SocketController {
     }
 
     async leaveRoomHandler(socket, io, data) {
-        const room = await this._messageService.getRoomById(data.roomId);
+        this._messageService.removeUserfromRoom(data.roomId, data.fromId)
+        
+    }
+
+    async removeConverMessageHandler(socket, io, data) {
+        await this._messageService.removeMessage(data.messageId);
+        io.to(`${this._socketRepo.getSocketIdByUserId(data.toId)}`).emit(socketConsts.EVENT_RECEIVE_REMOVE_CONVER_MESSAGE, {converId: data.converId, messageId: data.messageId});
+    }
+
+    async removeRoomMesssageHandler(socket, io, data) {
+        await this._messageService.removeMessage(data.messageId);
+        socket.to(data.roomId).emit(socketConsts.EVENT_RECEIVE_REMOVE_ROOM_MESSAGE, {roomId: data.roomId, messageId: data.messageId})
     }
 
     async disconnectHandler(socket, io) {

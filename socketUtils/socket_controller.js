@@ -19,10 +19,10 @@ class SocketController {
             converId: data.converId,
             message: message,
         }
-        io.to(`${this._socketRepo.getSocketIdByUserId(data.toUserId)}`).emit(socketConsts.EVENT_RECEIVE_CONVER_MESSAGE, result);
+        io.to(`${this._socketRepo.getSocketIdByUserId(data.toUserId)}`).to(`${this._socketRepo.getSocketIdByUserId(data.fromUserId)}`).emit(socketConsts.EVENT_RECEIVE_CONVER_MESSAGE, result);
     }
 
-    async  roomMessageHandler(socket, data) {
+    async  roomMessageHandler(socket, io, data) {
         let message;
         if(data.isImg){
             message = await this._messageService.addMessageToRoom(data.roomId, {author: data.fromUserId, content: data.content, isImg: true});
@@ -33,7 +33,7 @@ class SocketController {
             roomId: data.roomId,
             message: message,
         }
-        socket.to(data.roomId).emit(socketConsts.EVENT_RECEIVE_ROOM_MESSAGE, result);
+        io.to(data.roomId).emit(socketConsts.EVENT_RECEIVE_ROOM_MESSAGE, result);
     }
 
     async friendRequestHandler(socket, io, data) {

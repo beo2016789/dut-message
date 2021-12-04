@@ -14,7 +14,7 @@ module.exports = async (socket, io) => {
         socket.join(`${id._id}`);
     })
     onConverMessage(socket, io);
-    onRoomMessage(socket);
+    onRoomMessage(socket, io);
     onFriendRequest(socket, io);
     onAddFriend(socket, io);
     onDisconnect(socket, io);
@@ -23,6 +23,8 @@ module.exports = async (socket, io) => {
     onJoinRoom(socket, io);
     onLeaveRoom(socket, io);
     onCreateRoom(socket, io);
+    onRemoveConverMessage(socket, io);
+    onRemoveRoomMessage(socket, io);
 }
 
 function onConverMessage(socket, io) {
@@ -31,7 +33,7 @@ function onConverMessage(socket, io) {
     })
 }
 
-function onRoomMessage(socket) {
+function onRoomMessage(socket, io) {
     socket.on(SocketConsts.EVENT_SEND_ROOM_MESSAGE, (data) => {
         socketController.roomMessageHandler(socket, data);
     })
@@ -76,6 +78,18 @@ function onJoinRoom(socket, io) {
 function onLeaveRoom(socket, io) {
     socket.on(SocketConsts.EVENT_SEND_LEAVE_ROOM, (data) => {
         socketController.leaveRoomHandler(socket, io, data);
+    })
+}
+
+function onRemoveConverMessage(socket, io) {
+    socket.on(SocketConsts.EVENT_SEND_REMOVE_CONVER_MESSAGE, (data) => {
+        socketController.removeConverMessageHandler(socket, io, data);
+    })
+}
+
+function onRemoveRoomMessage(socket, io) {
+    socket.on(SocketConsts.EVENT_SEND_REMOVE_ROOM_MESSAGE, (data) => {
+        socketController.removeRoomMesssageHandler(socket, io, data);
     })
 }
 

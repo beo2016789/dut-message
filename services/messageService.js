@@ -111,6 +111,15 @@ class MessageService {
         }
     }
 
+    async getRoomByIdHaveListMessage(roomId) {
+        try{
+            let room = await this._roomRepo.getRoomByIdHaveListMessage(roomId);
+            return room;
+        } catch(err){
+            throw(err);
+        }
+    }
+
     async removeUserFromRoom(roomId, userId) {
         try{
             await this._roomRepo.removeUserfromRoom(roomId, userId);

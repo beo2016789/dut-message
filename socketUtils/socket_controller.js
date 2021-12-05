@@ -76,7 +76,7 @@ class SocketController {
     }
 
     async joinRoomHandler(socket, io, data) {
-        const room = await this._messageService.getRoomById(data.roomId);
+        const room = await this._messageService.getRoomByIdHaveListMessage(data.roomId);
         socket.join(`${data.roomId}`);
         io.to(`${this._socketRepo.getSocketIdByUserId(data.fromId)}`).emit(socketConsts.EVENT_RECEIVE_JOIN_ROOM, room);
     }

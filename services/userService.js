@@ -1,3 +1,10 @@
+const Vonage = require('@vonage/server-sdk');
+const vonage = new Vonage({
+    apiKey: "105acf09",
+    apiSecret: "UwSnPupKWzd9ylnJ"
+});
+
+
 class UserService {
     constructor(userRepo) {
         this._userRepo = userRepo;
@@ -123,11 +130,60 @@ class UserService {
         }
     }
 
-    async resetPassword(userId, inputPassword) {
+    async changePassword(userId, inputPassword) {
         try{
             const checkCurrentPassword = await this._userRepo.checkPassword(userId, inputPassword.current);
             if(checkCurrentPassword) {
                 await this._userRepo.changePassword(userId, inputPassword.new);
+                return true;
+            } else {
+                return false;
+            }
+        } catch (err) {
+            throw(err);
+        }
+    }
+
+    async sendOTP(phoneNumber) {
+        try{
+            await vonage.verify.request({
+                number: phoneNumber,
+                brand: "Dut-Message"
+            }, (err, result) => {
+                if(err) {
+                    throw(err);
+                } else {
+                    const verifyRequestId = result.request_id;
+                    return verifyRequestId
+                }
+            })
+        } catch (err) {
+            throw(err);
+        }
+    }
+
+    async verifyOTP(requestId, codeOTP) {
+        try{
+            await vonage.verify.check({
+                request_id: requestId,
+                code: codeOTP
+            }, (err, result) => {
+                if(err) {
+                    throw(err);
+                } else {
+                    return result;
+                }
+            })
+        } catch (err) {
+            throw(err);
+        }
+    }
+
+    async resetPassword(phoneNumber, newPassword){
+        try {
+            const user = await this._userRepo.findUserByPhone(phoneNumber);
+            if(user) {
+                await this._userRepo.changePassword(user._id, newPassword);
                 return true;
             } else {
                 return false;

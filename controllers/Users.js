@@ -1,3 +1,5 @@
+
+
 class UserController {
     constructor(userService) {
         this._userService = userService;
@@ -116,9 +118,9 @@ class UserController {
         }
     }
 
-    resetPassword = async (req, res, next) => {
+    changePassword = async (req, res, next) => {
         try{
-            const checkResetPassword = await this._userService.resetPassword(
+            const checkResetPassword = await this._userService.changePassword(
                 req.headers.id,
                 {
                     current: req.body.currentPassword,
@@ -132,6 +134,52 @@ class UserController {
             }
         } catch (err) {
             res.status(500).json({error: err});
+        }
+    }
+
+    forgotPassword = async (req, res, next) => {
+        try{
+            const phoneNumber = req.body.phone_number;
+            const user  = await this._userService.findUserByPhone(phoneNumber);
+            if(user) {
+                const requestId = await this._requestService.sendOTP(phoneNumber);
+                if(requestId){
+                    res.status(200).json({phone: phoneNumber, request_id: requestId});
+                } else {
+                    res.status(401).json({error: "don't get requestId"});
+                }
+            } else {
+                res.status(401).json({error: "user not found"})
+            }
+        } catch (err) {
+            res.status(500).json({error: err});
+        }
+    }
+
+    verifyOTP = async (req, res, next) => {
+        try{
+            const result = await this._userService.verifyOTP(req.body.request_id, req.body.codeOTP);
+            if(result) {
+                res.status(200).json({"verify-otp": true, "phone": req.body.phone_number});
+            } else {
+                res.status(401).json({"verify-otp": false});
+
+            }
+        } catch (err) {
+            res.status(500).json({error: err})
+        }
+    }
+
+    resetPassword = async (req, res, next) => {
+        try{
+            const check = await this._userService.resetPassword(req.body.phone_number, req.body.new_password)
+            if(check) {
+                res.status(200).json({'success': true});
+            } else {
+                res.status(401).json({'success': false});
+            }
+        } catch (err) {
+            res.status(500).json({error: err})
         }
     }
 }

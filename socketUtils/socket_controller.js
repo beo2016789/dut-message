@@ -44,10 +44,10 @@ class SocketController {
     async addFriendHandler(socket, io, data) {
         await this._userService.addFriend(data.fromId, data.toId);
         const F_request = await this._userService.getFriendRequest(data.fromId, data.toId);
-        await this._messageService.createConversation([data.fromId, data.toId]);
+        const conver = await this._messageService.createConversation([data.fromId, data.toId]);
         await this._userService.removeFriendRequest(F_request._id);
-        io.to(`${this._socketRepo.getSocketIdByUserId(data.fromId)}`).emit(socketConsts.EVENT_NOTIFY_ACCEPT_FRIEND, F_request.to);
-        io.to(`${this._socketRepo.getSocketIdByUserId(data.toId)}`).emit(socketConsts.EVENT_NOTIFY_ACCEPT_FRIEND, F_request.from);
+        io.to(`${this._socketRepo.getSocketIdByUserId(data.fromId)}`).emit(socketConsts.EVENT_NOTIFY_ACCEPT_FRIEND, {'userId': F_request.to, 'converId': conver._id});
+        io.to(`${this._socketRepo.getSocketIdByUserId(data.toId)}`).emit(socketConsts.EVENT_NOTIFY_ACCEPT_FRIEND, {'userId': F_request.from, 'converId': conver._id});
     }
 
     async removeFriendRequest(socket, io, data) {

@@ -142,7 +142,7 @@ class UserController {
             const phoneNumber = req.body.phone_number;
             const user  = await this._userService.findUserByPhone(phoneNumber);
             if(user) {
-                const requestId = await this._requestService.sendOTP(phoneNumber);
+                const requestId = await this._userService.sendOTP(phoneNumber);
                 if(requestId){
                     res.status(200).json({phone: phoneNumber, request_id: requestId});
                 } else {

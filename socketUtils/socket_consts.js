@@ -27,5 +27,10 @@ exports.EVENT_RECEIVE_CREATE_ROOM = 'receive-create-room';
 exports.EVENT_SEND_JOIN_ROOM = "send-join-room";
 exports.EVENT_RECEIVE_JOIN_ROOM = "receive-join-room";
 
+exports.EVENT_SEND_ADD_USER_TO_ROOM = "send-add-user-to-room";
+exports.EVENT_RECEIVE_ADD_USER_TO_ROOM = "receive-add-user-to-room";
+
 exports.EVENT_SEND_LEAVE_ROOM = "send-leave-room";
-exports.EVENT_RECEIVE_LEAVE_ROOM = "receive-leave-room"
+exports.EVENT_RECEIVE_LEAVE_ROOM = "receive-leave-room";
+
+

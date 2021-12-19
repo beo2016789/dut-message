@@ -147,14 +147,16 @@ class UserService {
     async sendOTP(phoneNumber) {
         try{
             await vonage.verify.request({
-                number: phoneNumber,
+                number: `${phoneNumber}`,
                 brand: "Dut-Message"
             }, (err, result) => {
                 if(err) {
+                    console.log(err);
                     throw(err);
                 } else {
                     const verifyRequestId = result.request_id;
-                    return verifyRequestId
+                    console.log(verifyRequestId);
+                    return verifyRequestId;
                 }
             })
         } catch (err) {
@@ -167,10 +169,11 @@ class UserService {
             await vonage.verify.check({
                 request_id: requestId,
                 code: codeOTP
-            }, (err, result) => {
+            }, async (err, result) => {
                 if(err) {
                     throw(err);
                 } else {
+                    console.log(result);
                     return result;
                 }
             })

@@ -81,19 +81,26 @@ class SocketController {
         io.to(`${this._socketRepo.getSocketIdByUserId(data.fromId)}`).emit(socketConsts.EVENT_RECEIVE_JOIN_ROOM, room);
     }
 
+    async addUserToRoom(socket, io, data) {
+        await this._messageService.addUserToRoom(data.roomId, data.userId);
+        io.to(`${this._socketRepo.getSocketIdByUserId(data.userId)}`).emit(socketConsts.EVENT_RECEIVE_ADD_USER_TO_ROOM, {"room_id": data.roomId});
+    }
+
     async leaveRoomHandler(socket, io, data) {
-        this._messageService.removeUserfromRoom(data.roomId, data.fromId)
+        await this._messageService.removeUserfromRoom(data.roomId, data.fromId)
         
     }
 
     async removeConverMessageHandler(socket, io, data) {
         await this._messageService.removeMessage(data.messageId);
         io.to(`${this._socketRepo.getSocketIdByUserId(data.toId)}`).emit(socketConsts.EVENT_RECEIVE_REMOVE_CONVER_MESSAGE, {converId: data.converId, messageId: data.messageId});
+        io.to(`${this._socketRepo.getSocketIdByUserId(data.fromId)}`).emit(socketConsts.EVENT_RECEIVE_REMOVE_CONVER_MESSAGE, {converId: data.converId, messageId: data.messageId});
     }
 
     async removeRoomMesssageHandler(socket, io, data) {
         await this._messageService.removeMessage(data.messageId);
-        socket.to(data.roomId).emit(socketConsts.EVENT_RECEIVE_REMOVE_ROOM_MESSAGE, {roomId: data.roomId, messageId: data.messageId})
+        io.to(data.roomId).emit(socketConsts.EVENT_RECEIVE_REMOVE_ROOM_MESSAGE, {roomId: data.roomId, messageId: data.messageId});
+        
     }
 
     async disconnectHandler(socket, io) {

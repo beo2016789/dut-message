@@ -80,5 +80,14 @@ class ConversationRepository {
             throw(error);
         }
     }
+
+    async findConverByArrayUserId(arrayId) {
+        try{
+            const conver = await Conversation.find({$and: [{userIns: {$elemMatch: {userIn: arrayId[0]}}}, {userIns: {$elemMatch: {userIn: arrayId[1]}}}]});
+            return conver;
+        } catch(error) {
+            throw(error);
+        }
+    }
 }
 module.exports = ConversationRepository;

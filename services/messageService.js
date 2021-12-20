@@ -151,5 +151,19 @@ class MessageService {
             throw(err);
         }
     }
+
+    async checkExistConver(arrayId) {
+        try{
+            const conver = await this._conversationRepo.findConverByArrayUserId(arrayId);
+            if(conver) {
+                const result = await this._conversationRepo.getConverById(conver._id);
+                return result;
+            } else {
+                return false;
+            }
+        } catch(err){
+            throw(err);
+        }
+    }
 }
 module.exports = MessageService;

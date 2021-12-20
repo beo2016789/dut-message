@@ -94,7 +94,7 @@ class MessageService {
                 });
             }
             let room = await this._roomRepo.createRoom(arrayMember, nameRoom);
-            await this.addMessageToRoom(room._id, {author: arrayId[0], content: content});
+            await this.addMessageToRoom(room._id, {author: arrayId[0], content: content, isNotify: true});
             const result_room = await this._roomRepo.getRoomByIdHaveListMessage(room._id);
             return result_room;
         } catch(err){

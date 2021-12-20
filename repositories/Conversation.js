@@ -10,7 +10,8 @@ class ConversationRepository {
                 })
             })
             let conversation = await Conversation.create({userIns: arrayUserIn});
-            return conversation;
+            const result = await this.getConverById(conversation._id);
+            return result;
         } catch (error) {
             throw(error);
         }

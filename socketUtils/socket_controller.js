@@ -46,8 +46,8 @@ class SocketController {
         const F_request = await this._userService.getFriendRequest(data.fromId, data.toId);
         const conver = await this._messageService.createConversation([data.fromId, data.toId]);
         await this._userService.removeFriendRequest(F_request._id);
-        io.to(`${this._socketRepo.getSocketIdByUserId(data.fromId)}`).emit(socketConsts.EVENT_NOTIFY_ACCEPT_FRIEND, {'userId': F_request.to, 'converId': conver._id});
-        io.to(`${this._socketRepo.getSocketIdByUserId(data.toId)}`).emit(socketConsts.EVENT_NOTIFY_ACCEPT_FRIEND, {'userId': F_request.from, 'converId': conver._id});
+        io.to(`${this._socketRepo.getSocketIdByUserId(data.fromId)}`).emit(socketConsts.EVENT_NOTIFY_ACCEPT_FRIEND, {'infoFriend': F_request.to, 'conver': conver});
+        io.to(`${this._socketRepo.getSocketIdByUserId(data.toId)}`).emit(socketConsts.EVENT_NOTIFY_ACCEPT_FRIEND, {'infoFriend': F_request.from, 'conver': conver});
     }
 
     async removeFriendRequest(socket, io, data) {

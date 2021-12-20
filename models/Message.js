@@ -7,6 +7,7 @@ const messageSchema = new mongoose.Schema({
     status: {type: String, default: ""},
     isImg: {type: Boolean, default: false},
     deleted_by: [{type: mongoose.Types.ObjectId, ref: "User"}],
+    isNotify: {type: Boolean, default: false},
 }, {
     timestamps: true,
 });

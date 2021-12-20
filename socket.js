@@ -2,6 +2,7 @@ const SocketController = require('./socketUtils/socket_controller');
 const SocketRepo = require('./socketUtils/socket_repo');
 const SocketConsts = require('./socketUtils/socket_consts');
 const {userService, roomService, messageService} = require('./utility/modulesInjection');
+const { Socket } = require('socket.io');
 
 let socketRepo = new SocketRepo();
 let socketController = new SocketController(userService, messageService, socketRepo);
@@ -25,6 +26,7 @@ module.exports = async (socket, io) => {
     onCreateRoom(socket, io);
     onRemoveConverMessage(socket, io);
     onRemoveRoomMessage(socket, io);
+    onAddUserToRoom(socket, io);
 }
 
 function onConverMessage(socket, io) {
@@ -66,6 +68,12 @@ function onCancelFriendRequest(socket, io) {
 function onCreateRoom(socket, io) {
     socket.on(SocketConsts.EVENT_SEND_CREATE_ROOM, (data) => {
         socketController.createRoomHandler(socket, io, data);
+    })
+}
+
+function onAddUserToRoom(socket, io) {
+    socket.on(SocketConsts.EVENT_SEND_ADD_USER_TO_ROOM, (data) => {
+        socketController.addUserToRoom(socket, io, data);
     })
 }
 

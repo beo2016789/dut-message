@@ -111,7 +111,7 @@ class UserController {
 
     updateInfoUser = async (req, res, next) => {
         try {
-            await this._userService.updateInfoUser(req.headers.id, req.body.name, req.body.email);
+            await this._userService.updateInfoUser(req.headers.id, req.body.name, req.body.email, req.body.avatar);
             res.status(200).json({success: 'success'});
         } catch (err) {
             res.status(500).json({error: err});

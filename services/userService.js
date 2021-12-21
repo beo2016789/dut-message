@@ -122,9 +122,9 @@ class UserService {
         }
     }
 
-    async updateInfoUser(userId, name, email){
+    async updateInfoUser(userId, name, email, avatar){
         try {
-            await this._userRepo.updateInfoUser(userId, {name: name, email: email});
+            await this._userRepo.updateInfoUser(userId, {name: name, email: email, avatar: avatar});
         } catch (err) {
             throw(err);
         }

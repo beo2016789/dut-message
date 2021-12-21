@@ -164,7 +164,7 @@ class UserRepository {
 
     async updateInfoUser(userId, info){
         try{
-            await User.findByIdAndUpdate(userId, {name: info.name, email: info.email});
+            await User.findByIdAndUpdate(userId, {name: info.name, email: info.email, avatar: info.avatar});
         } catch(err){
             throw(err);
         }

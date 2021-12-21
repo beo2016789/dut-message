@@ -146,7 +146,11 @@ class MessageService {
 
     async removeUserfromRoom(roomId, userId) {
         try{
+            const name = await this._userRepo.getNameById(userId);
+            const content = name + " đã rời khỏi nhóm";
+            const message = await this.addMessageToRoom(roomId, {author: userId, content: content, isNotify: true});
             await this._roomRepo.removeUserfromRoom(roomId, userId);
+            return message;
         } catch(err){
             throw(err);
         }

@@ -56,10 +56,10 @@ class RoomRepository {
                 select: ['_id', 'name', 'avatar']
             }).populate({
                 path: 'list_message', 
-                options: {
-                    limit: 1, 
-                    sort: {$natural: -1}
-                }, 
+                // options: {
+                //     limit: 1, 
+                //     sort: {$natural: -1}
+                // }, 
                 populate: {
                     path: 'author', 
                     select: ['_id', 'name', 'avatar', 'phone']

@@ -1,4 +1,5 @@
 const Vonage = require('@vonage/server-sdk');
+const util = require('util');
 const vonage = new Vonage({
     apiKey: "105acf09",
     apiSecret: "UwSnPupKWzd9ylnJ"
@@ -144,9 +145,9 @@ class UserService {
         }
     }
 
-    async sendOTP(phoneNumber) {
+    sendOTP(phoneNumber) {
         try{
-            await vonage.verify.request({
+            vonage.verify.request({
                 number: `${phoneNumber}`,
                 brand: "Dut-Message"
             }, (err, result) => {
@@ -164,12 +165,12 @@ class UserService {
         }
     }
 
-    async verifyOTP(requestId, codeOTP) {
+    verifyOTP(requestId, codeOTP) {
         try{
-            await vonage.verify.check({
+            vonage.verify.check({
                 request_id: requestId,
                 code: codeOTP
-            }, async (err, result) => {
+            },(err, result) => {
                 if(err) {
                     throw(err);
                 } else {

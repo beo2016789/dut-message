@@ -140,9 +140,9 @@ class UserController {
     forgotPassword = async (req, res, next) => {
         try{
             const phoneNumber = req.body.phone_number;
-            const user  = await this._userService.findUserByPhone(phoneNumber);
-            if(user) {
-                const requestId = await this._userService.sendOTP(phoneNumber);
+            // const user  = await this._userService.findUserByPhone(phoneNumber);
+            if(true) {
+                const requestId = this._userService.sendOTP(phoneNumber);
                 if(requestId){
                     res.status(200).json({phone: phoneNumber, request_id: requestId});
                 } else {

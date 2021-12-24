@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <title>Document</title>
+    <style>
+        body {
+            box-sizing: border-box;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            text-align: center;
+            margin: auto;
+            font-family: Helvetica, Arial, sans-serif;
+        }
+
+        .icon {
+            font-size: 100px;
+            margin-bottom: 40px;
+        }
+
+        .icon--success {
+            color: #2ac96d;
+        }
+
+        .icon--failed {
+            color: #f7b301;
+        }
+
+        .border {
+            height: 60vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 20px 28px;
+            background-color: #f7f7f7;
+            margin: auto;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="border">
+        <% if(success) { %>
+            <i class="far fa-check-circle icon icon--success"></i>
+            <h1>Password Changed!</h1>
+            <p>Your password has been changed successfully</p>
+            <% } else { %>
+                <i class="fas fa-exclamation-circle icon icon--failed"></i>
+                <h1>Password Changed Failed!</h1>
+                <p>Your password has bean changed failed</p>
+                <% } %>
+    </div>
+</body>
+
+</html>

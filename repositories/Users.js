@@ -57,6 +57,15 @@ class UserRepository {
         }
     }
 
+    async findUserByEmail(email) {
+        try {
+            let user = await User.findOne({email: email}, ['_id', 'email', 'avatar', 'name']);
+            return user;
+        } catch(err) {
+            throw(err);
+        }
+    }
+
     async checkRefresh(userId, refreshToken) {
         try {
             let user = await User.findById(userId);
@@ -155,6 +164,8 @@ class UserRepository {
 
     async changePassword(userId, password){
         try{
+            console.log(password);
+            console.log(userId);
             let hash = await bcrypt.hash(password, 10);
             await User.findByIdAndUpdate(userId, {password: hash});
         }catch(err){

@@ -11,11 +11,13 @@ const UserRepository = require('../repositories/Users'),
       ConversationService = require('../services/conversationService'),
       ConversationController = require('../controllers/Conversations'),
       MessageRepository = require('../repositories/Messages'),
-      MessageService = require('../services/messageService')
+      MessageService = require('../services/messageService'),
+      RequestResetPwRepo = require('../repositories/RequestResetPw')
 
 let userRepo = new UserRepository();
 let authService = new AuthService(userRepo);
 let authController = new AuthController(authService);
+let requestResetPwRepo = new RequestResetPwRepo();
 
 let authMiddleware = new AuthMiddleware(userRepo);
 
@@ -27,7 +29,7 @@ let conversationRepo = new ConversationRepository();
 let conversationService = new ConversationService(conversationRepo);
 let conversationController = new ConversationController(conversationService);
 
-let userService = new UserService(userRepo);
+let userService = new UserService(userRepo, requestResetPwRepo);
 let userController = new UserController(userService);
 
 let messageRepo = new MessageRepository();

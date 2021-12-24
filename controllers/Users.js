@@ -139,15 +139,11 @@ class UserController {
 
     forgotPassword = async (req, res, next) => {
         try{
-            const phoneNumber = req.body.phone_number;
-            // const user  = await this._userService.findUserByPhone(phoneNumber);
-            if(true) {
-                const requestId = this._userService.sendOTP(phoneNumber);
-                if(requestId){
-                    res.status(200).json({phone: phoneNumber, request_id: requestId});
-                } else {
-                    res.status(401).json({error: "don't get requestId"});
-                }
+            const email = req.body.email;
+            const user  = await this._userService.findUserByEmail(email);
+            if(user) {
+                const requestRsPW = await this._userService.sendEmailResetPassword(user._id, email);
+                res.status(200).json({request: requestRsPW});
             } else {
                 res.status(401).json({error: "user not found"})
             }
@@ -156,28 +152,17 @@ class UserController {
         }
     }
 
-    verifyOTP = async (req, res, next) => {
-        try{
-            const result = await this._userService.verifyOTP(req.body.request_id, req.body.codeOTP);
-            if(result) {
-                res.status(200).json({"verify-otp": true, "phone": req.body.phone_number});
-            } else {
-                res.status(401).json({"verify-otp": false});
-
-            }
-        } catch (err) {
-            res.status(500).json({error: err})
-        }
+    forwardToFormResetPw = async (req, res, next) => {
+        const requestId = req.params.request_rs_pw_id;
+        res.render('resetPassword', {requestId: requestId});
     }
 
     resetPassword = async (req, res, next) => {
         try{
-            const check = await this._userService.resetPassword(req.body.phone_number, req.body.new_password)
-            if(check) {
-                res.status(200).json({'success': true});
-            } else {
-                res.status(401).json({'success': false});
-            }
+            const password = req.body.password;
+            const requestId = req.params.requestId;
+            const check = await this._userService.resetPassword(requestId, password)
+            res.render('notifyResetPw', {success: check})
         } catch (err) {
             res.status(500).json({error: err})
         }

@@ -6,8 +6,8 @@ const {authMiddleware} = require('../utility/modulesInjection')
 router.post('/checkFriend', userController.checkFriend);
 router.post('/checkFriendRequest', userController.checkFriendRequest);
 router.post('/forgot-password', userController.forgotPassword);
-router.post('/verify-otp', userController.verifyOTP);
-router.post('/reset-password', userController.resetPassword);
+router.get('/request-reset-password/:request_rs_pw_id', userController.forwardToFormResetPw)
+router.post('/reset-password/:requestId', userController.resetPassword);
 
 router.use(authMiddleware.AuthenToken);
 

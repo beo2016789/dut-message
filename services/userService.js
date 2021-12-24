@@ -153,6 +153,7 @@ class UserService {
     async sendEmailResetPassword(userId, email) {
         try{
             const request = await this._requestRsPwRepo.createRequest(userId, email);
+            setTimeout(this._requestRsPwRepo.deleteRequest, 180000, request._id);
             let content = '';
             content += `
             <!DOCTYPE html>

@@ -335,7 +335,7 @@ class UserService {
                                                                         <td
                                                                             style="padding-bottom:20px;padding-left:10px;padding-right:10px;padding-top:20px;text-align:left;">
                                                                             <a
-                                                                                href="http://localhost:3000/api/user/request-reset-password/${request._id}"
+                                                                                href="https://dut-message.up.railway.app/api/user/request-reset-password/${request._id}"
                                                                                 style="text-decoration:none;display:inline-block;color:#ffffff;background-color:#506bec;border-radius:16px;width:auto;border-top:0px solid TRANSPARENT;border-right:0px solid TRANSPARENT;border-bottom:0px solid TRANSPARENT;border-left:0px solid TRANSPARENT;padding-top:8px;padding-bottom:8px;font-family:Helvetica Neue, Helvetica, Arial, sans-serif;text-align:center;mso-border-alt:none;word-break:keep-all;"
                                                                                 target="_blank"><span
                                                                                     style="padding-left:25px;padding-right:20px;font-size:15px;display:inline-block;letter-spacing:normal;"><span

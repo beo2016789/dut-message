@@ -479,9 +479,10 @@ class UserService {
             </html>
             `
             let transporter =  nodemailer.createTransport({
-                host: 'smtp.gmail.com',
-                port: 465,
-                secure: true,
+                // host: 'smtp.gmail.com',
+                // port: 465,
+                // secure: true,
+                service: 'gmail',
                 auth: {
                     user: 'quocdatdn292001@gmail.com',
                     pass: 'datkenry29'

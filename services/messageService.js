@@ -136,9 +136,14 @@ class MessageService {
         }
     }
 
-    async addUserToRoom(roomId, userId) {
+    async addUserToRoom(roomId, userAddId, userIsAddedId) {
         try{
-            await this._roomRepo.addUserToRoom(roomId, userId);
+            const nameAdd = await this._userRepo.getNameById(userAddId);
+            const nameIsAdd = await this._userRepo.getNameById(userIsAddedId);
+            const content = nameAdd + " đã thêm " + nameIsAdd + " vào nhóm";
+            const message = await this.addMessageToRoom(roomId, {author: userAddId, content: content, isNotify: true});
+            await this._roomRepo.addUserToRoom(roomId, userIsAddedId);
+            return message;
         } catch(err){
             throw(err);
         }

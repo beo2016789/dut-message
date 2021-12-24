@@ -88,7 +88,12 @@ class SocketController {
     }
 
     async addUserToRoom(socket, io, data) {
-        await this._messageService.addUserToRoom(data.roomId, data.userId);
+        const message = await this._messageService.addUserToRoom(data.roomId, data.user_add_id, data.user_is_added_id);
+        let result = {
+            roomId: data.roomId,
+            message: message
+        }
+        io.to(data.roomId).emit(socketConsts.EVENT_RECEIVE_ROOM_MESSAGE, result);
         io.to(`${this._socketRepo.getSocketIdByUserId(data.userId)}`).emit(socketConsts.EVENT_RECEIVE_ADD_USER_TO_ROOM, {"room_id": data.roomId});
     }
 

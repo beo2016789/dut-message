@@ -96,8 +96,9 @@ class SocketController {
             }
             io.to(data.roomId).emit(socketConsts.EVENT_RECEIVE_ROOM_MESSAGE, result);
         })
+        const room = await this._messageService.getRoomByIdHaveListMessage(data.roomId);
         data.array_user_is_added_id.map(id => {
-            io.to(`${this._socketRepo.getSocketIdByUserId(id)}`).emit(socketConsts.EVENT_RECEIVE_ADD_USER_TO_ROOM, {"room_id": data.roomId});
+            io.to(`${this._socketRepo.getSocketIdByUserId(id)}`).emit(socketConsts.EVENT_RECEIVE_ADD_USER_TO_ROOM, room);
         })
     }
 

@@ -136,14 +136,25 @@ class MessageService {
         }
     }
 
-    async addUserToRoom(roomId, userAddId, userIsAddedId) {
+    async addUserToRoom(roomId, userAddId, arrayUserIsAddedId) {
         try{
+            let listNameIsAdd = await Promise.all(arrayUserIsAddedId.map(async (id) => {
+                const name = await this._userRepo.getNameById(id);
+                return  name;
+            }))
             const nameAdd = await this._userRepo.getNameById(userAddId);
-            const nameIsAdd = await this._userRepo.getNameById(userIsAddedId);
-            const content = nameAdd + " đã thêm " + nameIsAdd + " vào nhóm";
-            const message = await this.addMessageToRoom(roomId, {author: userAddId, content: content, isNotify: true});
-            await this._roomRepo.addUserToRoom(roomId, userIsAddedId);
-            return message;
+            let listContent = []
+            listNameIsAdd.map(name => {
+                listContent.push(nameAdd + " đã thêm " + name + " vào nhóm");
+            })
+            let list_message = await Promise.all(listContent.map(async (content) => {
+                const message = await this.addMessageToRoom(roomId, {author: userAddId, content: content, isNotify: true});
+                return message;
+            }))
+            await Promise.all(arrayUserIsAddedId.map(async (id) => {
+                await this._roomRepo.addUserToRoom(roomId, id);
+            }))
+            return list_message;
         } catch(err){
             throw(err);
         }

@@ -17,15 +17,6 @@ app.use(express.static("public"));
 app.set("view engine", "ejs");
 app.set("views", "./views");
 
-app.get("/user1", (req, res) => {
-    res.render("user1");
-})
-app.get("/user2", (req, res) => {
-    res.render("user2");
-})
-app.get("/user3", (req, res) => {
-    res.render("user3");
-})
 route(app);
 
 module.exports = app;

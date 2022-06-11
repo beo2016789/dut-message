@@ -10,11 +10,7 @@ class SocketController {
 
     async converMessageHandler(socket, io, data) {
         let message;
-        if(data.isImg){
-            message = await this._messageService.addMessageToConver(data.converId, {author: data.fromUserId, content: data.content, isImg: true});
-        } else {
-            message = await this._messageService.addMessageToConver(data.converId, {author: data.fromUserId, content: data.content});
-        }
+        message = await this._messageService.addMessageToConver(data.converId, {author: data.fromUserId, content: data.content, message_type: data.message_type});
         let result = {
             converId: data.converId,
             message: message,
@@ -24,11 +20,7 @@ class SocketController {
 
     async  roomMessageHandler(socket, io, data) {
         let message;
-        if(data.isImg){
-            message = await this._messageService.addMessageToRoom(data.roomId, {author: data.fromUserId, content: data.content, isImg: true});
-        } else {
-            message = await this._messageService.addMessageToRoom(data.roomId, {author: data.fromUserId, content: data.content});
-        }
+        message = await this._messageService.addMessageToRoom(data.roomId, {author: data.fromUserId, content: data.content, message_type: data.message_type});
         let result = {
             roomId: data.roomId,
             message: message,

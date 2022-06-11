@@ -7,7 +7,7 @@ class AuthController {
             let response = await this._authService.login(req.body.username, req.body.password);
             res.status(200).json(response);
         } catch (err) {
-            res.status(500).json({error: err});
+            res.status(401).json({error: err});
         }
     }
 

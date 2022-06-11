@@ -6,7 +6,7 @@ class RoomRepository {
             arrayMember.map((member) => {
                 memberArray.push({member: member.id, nick_name: member.nick_name});
             })
-            const room = await Room.create({name: nameRoom, members: memberArray});
+            const room = await Room.create({name: nameRoom, members: memberArray, avatar: "https://cdn4.vectorstock.com/i/1000x1000/22/08/people-having-conversation-icon-image-vector-14222208.jpg"});
             const result = await Room.findById(room._id, ['_id', 'name', 'members']).populate({path: 'members.member', select: ['_id', 'name', 'avatar', 'phone']});
             return result;
         } catch (error) {

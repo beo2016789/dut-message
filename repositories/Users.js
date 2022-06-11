@@ -7,6 +7,7 @@ class UserRepository {
         try{
             let hash = await bcrypt.hash(user.password, 10);
             user.password = hash;
+            user.avatar = "https://www.zimlive.com/dating/wp-content/themes/gwangi/assets/images/avatars/user-avatar.png";
             let newUser = await User.create(user);
             return newUser;
         } catch(err){

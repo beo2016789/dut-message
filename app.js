@@ -13,7 +13,7 @@ const app = express();
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(logger('dev'));
-app.use(express.static("public"));
+app.use(express.static(path.join(__dirname, "public")));
 app.set("view engine", "ejs");
 app.set("views", "./views");
 

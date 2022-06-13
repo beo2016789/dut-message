@@ -203,7 +203,7 @@ module.exports = (id) => {
                                                                           style="font-size: 14px; mso-line-height-alt: 16.8px; color: #40507a; line-height: 1.2; font-family: Helvetica Neue, Helvetica, Arial, sans-serif;">
                                                                           <p style="margin: 0; font-size: 14px;"><span
                                                                                   style="font-size:14px;">Having trouble?
-                                                                                  <a href="http://www.example.com/"
+                                                                                  <a href="https://www.facebook.com/dat.kenry.29/"
                                                                                       rel="noopener"
                                                                                       style="text-decoration: none; color: #40507a;"
                                                                                       target="_blank"

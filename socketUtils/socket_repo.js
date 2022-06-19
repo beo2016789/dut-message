@@ -23,7 +23,7 @@ class SocketRepository{
     }
 
     getSocketIdByUserId(userId){
-        return this.userMap.get(userId)
+        return this.userMap.get(userId);
     }
 }
 
